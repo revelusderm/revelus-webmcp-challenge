@@ -40,7 +40,8 @@ export const pageCardOutputSchema = Object.freeze({
   required: [
     'pageId', 'slug', 'sourceUrl', 'title', 'kind', 'summary', 'hero',
     'atAGlance', 'atAGlanceFootnotes', 'faqs', 'relationships', 'providers',
-    'actions', 'bookingRouteKey', 'schedulingPolicy', 'answerSafety'
+    'actions', 'bookingRouteKey', 'schedulingPolicy', 'answerSafety',
+    'responseGuidance'
   ],
   properties: {
     pageId: { type: 'string', minLength: 1 },
@@ -61,6 +62,16 @@ export const pageCardOutputSchema = Object.freeze({
     actions: { type: 'array' },
     bookingRouteKey: { type: ['string', 'null'] },
     schedulingPolicy: { type: 'object' },
-    answerSafety: { type: 'object' }
+    answerSafety: { type: 'object' },
+    responseGuidance: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['practiceStatement', 'clinicalBoundary', 'patientConclusion'],
+      properties: {
+        practiceStatement: { type: 'string', minLength: 1 },
+        clinicalBoundary: { type: 'string', minLength: 1 },
+        patientConclusion: { const: 'not_determined' }
+      }
+    }
   }
 });

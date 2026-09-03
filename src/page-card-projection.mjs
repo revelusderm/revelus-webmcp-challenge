@@ -65,6 +65,78 @@ function displaySummary(record) {
   return definition ? firstSentence(definition.answer) : record.summary;
 }
 
+function cleanPublishedLabel(value) {
+  return String(value ?? '').replace(/\s+/g, ' ').trim().replace(/[.!?]+$/, '');
+}
+
+function restorePublishedCasing(label, evidence = []) {
+  if (!label || /[A-Z]/.test(label)) return label;
+  const normalizedLabel = label.toLocaleLowerCase('en-US');
+  for (const value of evidence) {
+    const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+    const index = text.toLocaleLowerCase('en-US').indexOf(normalizedLabel);
+    if (index >= 0) return cleanPublishedLabel(text.slice(index, index + label.length));
+  }
+  return label;
+}
+
+function responseGuidance(record, corpusRecord) {
+  const publishedLabel = restorePublishedCasing(cleanPublishedLabel(
+    record.pageType === 'provider'
+      ? record.providerProfile?.name || corpusRecord?.wordpressTitle || record.title
+      : corpusRecord?.wordpressTitle || record.title
+  ), [corpusRecord?.description, record.seoDescription, record.summary]);
+  if (!publishedLabel) {
+    return {
+      practiceStatement: 'Revelus publishes information on this page.',
+      clinicalBoundary: 'This is published practice information, not a clinical conclusion about you.',
+      patientConclusion: 'not_determined'
+    };
+  }
+
+  if (record.pageType === 'condition') {
+    const condition = cleanPublishedLabel(
+      publishedLabel.replace(/\s+(?:information|treatment(?:\s+in\s+austin(?:,?\s+tx)?)?)$/i, '')
+    ).toLocaleLowerCase('en-US');
+    return {
+      practiceStatement: `Revelus evaluates and treats ${condition}.`,
+      clinicalBoundary: `Matching this page does not mean you have ${condition}. A licensed clinician must evaluate you to make a diagnosis.`,
+      patientConclusion: 'not_determined'
+    };
+  }
+
+  if (['medical_service', 'cosmetic_service'].includes(record.pageType)) {
+    const article = /\b(?:appointment|consultation|evaluation|analysis|screening)$/i.test(publishedLabel) ? 'the ' : '';
+    return {
+      practiceStatement: `Revelus offers ${article}${publishedLabel}.`,
+      clinicalBoundary: `Matching this page does not determine whether ${publishedLabel} is appropriate for you. A Revelus professional must evaluate that with you.`,
+      patientConclusion: 'not_determined'
+    };
+  }
+
+  if (record.pageType === 'provider') {
+    return {
+      practiceStatement: `${publishedLabel} is listed as a provider at Revelus.`,
+      clinicalBoundary: 'Matching this page does not determine which provider is appropriate for you.',
+      patientConclusion: 'not_determined'
+    };
+  }
+
+  if (record.pageType === 'homepage') {
+    return {
+      practiceStatement: 'Revelus publishes information about the practice.',
+      clinicalBoundary: 'This is published practice information, not a clinical conclusion about you.',
+      patientConclusion: 'not_determined'
+    };
+  }
+
+  return {
+    practiceStatement: `Revelus publishes information on its "${publishedLabel}" page.`,
+    clinicalBoundary: 'This is published practice information, not a clinical conclusion about you.',
+    patientConclusion: 'not_determined'
+  };
+}
+
 export function createPageCardProjector({ corpus, curatedRecords }) {
   const curatedByUrl = new Map(curatedRecords.map(record => [normalizeUrl(record.source.url), record]));
   const corpusByUrl = new Map(corpus.records.map(record => [normalizeUrl(record.sourceUri), record]));
@@ -100,6 +172,7 @@ export function createPageCardProjector({ corpus, curatedRecords }) {
   function project(recordOrPageId, { entry = null } = {}) {
     const record = typeof recordOrPageId === 'string' ? curatedByPageId.get(recordOrPageId) : recordOrPageId;
     if (!record) throw new Error('Unknown curated page');
+    const corpusRecord = corpusByUrl.get(normalizeUrl(record.source.url));
     const grouped = emptyRelationshipGroups();
     for (const relationship of record.relationships ?? []) {
       if (relationship.reviewStatus !== 'verified' || !Object.hasOwn(grouped, relationship.relationshipKind)) continue;
@@ -164,7 +237,8 @@ export function createPageCardProjector({ corpus, curatedRecords }) {
         .map(action => ({ kind: action.kind, label: action.label, url: action.url, bookingRouteKey: action.bookingRouteKey })),
       bookingRouteKey: primaryRoute,
       schedulingPolicy: publicSchedulingPolicy(record, primaryRoute),
-      answerSafety: structuredClone(record.answerSafety)
+      answerSafety: structuredClone(record.answerSafety),
+      responseGuidance: responseGuidance(record, corpusRecord)
     };
     if (record.pageType === 'provider') {
       card.conditionsAddressed = grouped.provider_addressing.filter(item => item.kind === 'condition');

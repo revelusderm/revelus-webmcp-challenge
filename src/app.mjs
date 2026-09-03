@@ -15,7 +15,7 @@ const gates = createLatestOnlyGate();
 const dom = Object.fromEntries([
   'question-form', 'question-input', 'ask-button', 'question-pool-toggle', 'question-pool',
   'topic-chips', 'gate-chips', 'connection-status', 'results', 'results-title',
-  'results-nav-link', 'results-list', 'result-gate', 'view-more-button', 'ask-again-button',
+  'results-nav-link', 'results-list', 'results-guidance', 'result-gate', 'view-more-button', 'ask-again-button',
   'webmcp-response-tool', 'webmcp-response-source', 'webmcp-response-output',
   'tool-call-log', 'live-region', 'faq-more-button'
 ].map(id => [id, document.getElementById(id)]));
@@ -94,6 +94,36 @@ function cardStateFor(pageId) {
   return state.cardState.get(pageId);
 }
 
+function captureResultFocus() {
+  const active = document.activeElement;
+  if (!(active instanceof HTMLElement)) return null;
+  const card = active.closest('.result-card');
+  if (!card?.dataset.pageId) return null;
+  const anchor = active.dataset.focusKey ? active : card;
+  return {
+    pageId: card.dataset.pageId,
+    focusKey: active.dataset.focusKey ?? null,
+    top: anchor.getBoundingClientRect().top
+  };
+}
+
+function restoreResultFocus(snapshot) {
+  if (!snapshot) return;
+  const card = [...dom['results-list'].querySelectorAll('.result-card')]
+    .find(item => item.dataset.pageId === snapshot.pageId);
+  if (!card) return;
+  const target = snapshot.focusKey
+    ? [...card.querySelectorAll('[data-focus-key]')].find(item => item.dataset.focusKey === snapshot.focusKey)
+    : null;
+  const anchor = target ?? card;
+  window.scrollBy({
+    top: anchor.getBoundingClientRect().top - snapshot.top,
+    left: 0,
+    behavior: 'instant'
+  });
+  target?.focus({ preventScroll: true });
+}
+
 function recordResponse(update) {
   const source = update.source === 'webmcp' ? 'webmcp' : 'shared_handler';
   try {
@@ -152,6 +182,12 @@ function applySearch(result) {
       kind: 'two_visit',
       title: 'two separate appointments',
       text: 'Some concerns need separate visits so each one follows the correct Revelus scheduling path.'
+    };
+  } else if (currentQuestionMeta()?.gate === 'staff_assistance') {
+    state.questionGate = {
+      kind: 'staff_assistance',
+      title: 'call Revelus to schedule',
+      text: 'The Revelus office needs to help choose or schedule the right visit for this question.'
     };
   }
   renderResults();
@@ -217,6 +253,10 @@ function gateForCurrentQuestion() {
   return /\bmedicare(?:\s+advantage)?\b/i.test(state.query) ? 'medicare' : null;
 }
 
+function providerRelationshipIsDirectoryOnly(card) {
+  return card.match?.entryKind === 'provider_relationship' && gateForCurrentQuestion() !== 'medicare';
+}
+
 function kindLabel(kind) {
   return ({
     condition: 'skin condition',
@@ -258,13 +298,16 @@ function renderQuestions(card, cardState) {
     const panelId = `${card.pageId}-${faq.faqId}-answer`;
     const open = cardState.openFaqs.has(faq.faqId);
     button.type = 'button';
+    button.dataset.focusKey = `faq:${faq.faqId}`;
     button.setAttribute('aria-expanded', String(open));
     button.setAttribute('aria-controls', panelId);
     button.append(node('span', '', faq.question));
     button.addEventListener('click', () => {
-      if (cardState.openFaqs.has(faq.faqId)) cardState.openFaqs.delete(faq.faqId);
-      else cardState.openFaqs.add(faq.faqId);
-      renderResults();
+      const opening = !cardState.openFaqs.has(faq.faqId);
+      if (opening) cardState.openFaqs.add(faq.faqId);
+      else cardState.openFaqs.delete(faq.faqId);
+      button.setAttribute('aria-expanded', String(opening));
+      answer.hidden = !opening;
     });
     row.append(button);
     const answer = node('p', 'question-answer', faq.answer);
@@ -312,13 +355,14 @@ function callState(message = 'This visit is scheduled directly by our office.') 
 }
 
 function routeMeta(path, result) {
-  const wrap = node('p', 'route-meta');
+  const wrap = node('div', 'route-meta');
   const reason = path?.visitReason || path?.reason || result?.question || 'Revelus appointment';
-  wrap.append(node('strong', '', reason));
+  const appointment = node('p', 'route-appointment');
+  appointment.append(node('strong', '', 'Appointment type:'), ` ${reason}`);
   const location = path?.location === 'virtual' ? 'telemedicine · schedule online'
     : path?.mode === 'call' ? 'in-office · South Austin · scheduled by our office'
       : 'in-office · South Austin · book online';
-  wrap.append(node('span', '', location));
+  wrap.append(appointment, node('p', 'route-location', location));
   return wrap;
 }
 
@@ -328,6 +372,7 @@ function selectControl(label, options, value, helper, onChange) {
   const labelNode = node('label', '', label);
   labelNode.htmlFor = id;
   const select = node('select');
+  select.dataset.focusKey = `select:${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   select.id = id;
   const placeholder = node('option', '', '- Choose -');
   placeholder.value = '';
@@ -485,7 +530,7 @@ function renderPlanClarification(card, cardState, result) {
 
 function renderProviders(card, cardState) {
   const wrap = node('div');
-  if (card.match?.entryKind === 'provider_relationship' && card.providers?.length) {
+  if (providerRelationshipIsDirectoryOnly(card) && card.providers?.length) {
     const directory = node('div', 'provider-directory');
     for (const provider of card.providers) {
       const row = node('div', 'provider-row provider-directory-row');
@@ -633,6 +678,7 @@ function renderCard(card) {
     const panelId = `${card.pageId}-${definition.key}-panel`;
     const open = cardState.open.has(definition.key);
     button.type = 'button';
+    button.dataset.focusKey = `accordion:${definition.key}`;
     button.setAttribute('aria-expanded', String(open));
     button.setAttribute('aria-controls', panelId);
     button.append(node('span', '', definition.label));
@@ -640,10 +686,13 @@ function renderCard(card) {
       const opening = !cardState.open.has(definition.key);
       if (opening) cardState.open.add(definition.key);
       else cardState.open.delete(definition.key);
-      renderResults();
+      button.setAttribute('aria-expanded', String(opening));
+      panel.hidden = !opening;
+      panel.replaceChildren();
+      if (opening) panel.append(accordionPanel(card, cardState, definition.key));
       if (!opening) return;
       try {
-        if (definition.key === 'providers' && card.match?.entryKind !== 'provider_relationship') await ensureCardPlan(card);
+        if (definition.key === 'providers' && !providerRelationshipIsDirectoryOnly(card)) await ensureCardPlan(card);
         else if (!cardState.answered && card.match?.entryId) await state.actions.answer({ entryId: card.match.entryId });
       } catch (error) {
         showCardError(card, error);
@@ -678,6 +727,14 @@ function renderGate() {
     dom['result-gate'].append(actions);
     return;
   }
+  if (gate.kind === 'staff_assistance') {
+    dom['result-gate'].append(
+      node('h3', '', gate.title ?? 'call Revelus to schedule'),
+      node('p', '', gate.text),
+      callState('Call the Revelus office so the team can help with the correct scheduling path.')
+    );
+    return;
+  }
   dom['result-gate'].append(node('h3', '', gate.title ?? 'two separate appointments'), node('p', '', gate.text));
   const actions = node('div', 'gate-actions');
   const acknowledge = node('button', 'inline-button', 'I Understand');
@@ -693,10 +750,12 @@ function renderGate() {
 }
 
 function renderResults() {
+  const focusSnapshot = captureResultFocus();
   const visible = state.searchStatus !== 'idle';
   dom.results.classList.toggle('is-hidden', !visible);
   dom['results-nav-link'].classList.toggle('is-hidden', !visible);
   if (!visible) return;
+  dom['results-guidance'].classList.toggle('is-hidden', state.searchStatus !== 'results');
   renderGate();
   if (state.searchStatus === 'loading') {
     const loading = node('div', 'result-card result-status-card');
@@ -723,6 +782,7 @@ function renderResults() {
     dom['results-list'].append(empty);
   }
   dom['view-more-button'].classList.toggle('is-hidden', state.shown >= state.results.length);
+  restoreResultFocus(focusSnapshot);
 }
 
 function showCardError(card, error) {

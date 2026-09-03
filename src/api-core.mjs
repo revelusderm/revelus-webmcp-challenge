@@ -41,22 +41,18 @@ export function createApiHandlers({ corpus, searchIndex, curatedRecords, registr
       };
       const ranked = knowledge.searchPages(input);
       const language = resolver.resolve({ text: input.query });
-      const preferred = [];
+      let preferredSources = [];
       if (language.status === 'resolved' || language.status === 'multi_match') {
-        for (const [index, item] of [...(language.concepts ?? []), ...(language.secondaryConcepts ?? [])].entries()) {
-          const matchBonus = item.matchType === 'explicit_choice' ? 48 : item.matchType === 'patient_phrase' ? 45 : 24;
-          preferred.push({ sourceUrl: item.sourceUrl, bonus: matchBonus - Math.min(index, 2) * 4 });
-        }
-      } else if (language.status === 'ambiguous' && !(/\bhow much\b/.test(input.query.toLowerCase()) && /\bremove a skin tag\b/.test(input.query.toLowerCase()))) {
-        for (const option of language.ambiguity?.options ?? []) {
-          const sourceUrl = conceptsById.get(option.conceptId)?.sourceUrl;
-          if (sourceUrl) preferred.push({ sourceUrl, bonus: 0 });
-        }
+        preferredSources = [...(language.concepts ?? []), ...(language.secondaryConcepts ?? [])].map(item => item.sourceUrl);
+      } else if (language.status === 'ambiguous') {
+        preferredSources = (language.ambiguity?.options ?? [])
+          .map(option => conceptsById.get(option.conceptId)?.sourceUrl)
+          .filter(Boolean);
       }
-      const preferredSources = preferred.filter(item => !demoExcludedSources.has(item.sourceUrl));
+      preferredSources = preferredSources.filter(sourceUrl => !demoExcludedSources.has(sourceUrl));
       if (!preferredSources.length) return { ...ranked, plan: null };
       const bySource = new Map(ranked.results.map(result => [result.sourceUrl, result]));
-      const orderedSources = [...new Set(preferredSources.map(item => item.sourceUrl))];
+      const orderedSources = [...new Set(preferredSources)];
       const preferredSet = new Set(orderedSources);
       const preferredCards = orderedSources.map(sourceUrl => bySource.get(sourceUrl) ?? knowledge.pageCardForSource(sourceUrl));
       const results = [...preferredCards, ...ranked.results.filter(result => !preferredSet.has(result.sourceUrl))].slice(0, input.limit ?? 5);

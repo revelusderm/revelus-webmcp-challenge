@@ -129,8 +129,39 @@ export function createPatientLanguageResolver({ registry, allowedPublicNames = [
           return output('resolved', 'T1', [conceptView(match)]);
         }
       }
-      const explicitMentions = canonicalMentions(text, concepts);
-      const acneScarContext = !explicitMentions.some(item => item.concept.canonicalLabel === 'Acne Scars') && /\bacne\b/.test(text) && /\bscars?\b/.test(text);
+      const earlyExplicitMentions = canonicalMentions(text, concepts);
+      const explicitMulti = earlyExplicitMentions.length >= 2 && /\b(?:and|or|versus|vs)\b/.test(text);
+      const compoundPhrase = explicitMulti ? null : [
+        { test: /\bisotretinoin\b.*\b(?:labs?|laboratory|blood work|monitoring)\b|\b(?:labs?|laboratory|blood work|monitoring)\b.*\bisotretinoin\b/, canonicalLabel: 'Acne Evaluation', matchedSurface: 'isotretinoin monitoring' },
+        { test: /\b(?:refill|prescription|cream)\b.*\b(?:telemedicine|telehealth|virtual(?:ly)?|video)\b|\b(?:telemedicine|telehealth|virtual(?:ly)?|video)\b.*\b(?:refill|prescription|cream)\b/, canonicalLabel: 'Prescription Refill Appointment', matchedSurface: 'virtual prescription refill' },
+        { test: /\bhair\s+loss\b.*\b(?:telemedicine|telehealth|virtual|video)\b|\b(?:telemedicine|telehealth|virtual|video)\b.*\bhair\s+loss\b/, canonicalLabel: 'Virtual Appointment', matchedSurface: 'virtual hair loss evaluation' },
+        { test: /\bconsultation\b.*\bbefore\b.*\b(?:chemical )?peel\b|\bbefore\b.*\b(?:chemical )?peel\b.*\bconsultation\b/, canonicalLabel: 'Aesthetician Consultation', matchedSurface: 'consultation before a chemical peel' },
+        { test: /\bcyst removal\b|\b(?:remove|removed)\b.*\bcysts?\b.*\b(?:same appointment|evaluation)\b|\bcysts?\b.*\b(?:same appointment|evaluation)\b.*\b(?:remove|removed)\b/, canonicalLabel: 'Cyst Removal', matchedSurface: 'cyst removal', confidenceTier: 'T1' },
+        { test: /\bskin tag removal\b|^(?=.*\bskin\s+tags?\b)(?=.*\bremov\w*\b)(?=.*\b(?:book|can you|charge|consultation|cost|do you|how much|price|priced|same appointment)\b)/, canonicalLabel: 'Skin Tag Removal', matchedSurface: 'skin tag removal', confidenceTier: 'T1' },
+        { test: /\b(?:toenail|nail)\s+fungus\b/, canonicalLabel: 'Nail Fungus', matchedSurface: 'toenail fungus', confidenceTier: 'T1' },
+        { test: /\bskinpen\b/, canonicalLabel: 'SkinPen Microneedling', matchedSurface: 'SkinPen', confidenceTier: 'T1' },
+        { test: /\bvisia\b/, canonicalLabel: 'Visia Skin Analysis', matchedSurface: 'VISIA' },
+        { test: /\b(?:rolling|tethered)\b.*\bacne\s+scars?\b|\bacne\s+scars?\b.*\b(?:rolling|tethered)\b/, canonicalLabel: 'Subcision', matchedSurface: 'rolling or tethered acne scars' },
+        { test: /\bacne\b.*\b(?:pregnancy|pregnant)\b|\b(?:pregnancy|pregnant)\b.*\bacne\b/, canonicalLabel: 'Acne Evaluation', matchedSurface: 'acne care while planning pregnancy' },
+        { test: /\bfull[\s-]?body\s+(?:skin\s+)?(?:check|exam|screening)\b.*\bacne\b|\bacne\b.*\bfull[\s-]?body\s+(?:skin\s+)?(?:check|exam|screening)\b/, canonicalLabel: 'Skin Cancer Screening', matchedSurface: 'full-body skin check' },
+        { test: /\bitchy\b.*\bblister(?:ing|s)?\b.*\b(?:hiking|plants?|outdoors?)\b|\b(?:hiking|plants?|outdoors?)\b.*\bitchy\b.*\bblister/, canonicalLabel: 'Contact Dermatitis', matchedSurface: 'itchy blistering rash after hiking' },
+        { test: /\bipl\s+photofacial\b/, canonicalLabel: 'IPL Photofacial', matchedSurface: 'IPL photofacial', confidenceTier: 'T1' },
+        { test: /\bipl\b/, canonicalLabel: 'IPL Photofacial', matchedSurface: 'IPL' },
+        { test: /\b(?:scar|growth)\b.*\bbeyond\b.*\b(?:wound|hole|original)\b/, canonicalLabel: 'Keloids', matchedSurface: 'scar growing beyond the original wound' },
+        { test: /\bdeep\s+painful\s+bumps?\b.*\b(?:underarms?|groin)\b|\b(?:underarms?|groin)\b.*\bdeep\s+painful\s+bumps?\b/, canonicalLabel: 'Hidradenitis Suppurativa', matchedSurface: 'deep recurring underarm and groin bumps' },
+        { test: /\brough\s+scaly\s+spot\b.*\b(?:sun|forearm)\b|\b(?:sun[\s-]?exposed|forearm)\b.*\brough\s+scaly\s+spot\b/, canonicalLabel: 'Actinic Keratosis', matchedSurface: 'rough scaly sun-exposed spot' },
+        { test: /\b(?:pearly|shiny)\s+(?:spot|bump)\b.*\bbleed/, canonicalLabel: 'Basal Cell Carcinoma', matchedSurface: 'pearly bump that bleeds' }
+      ].find(candidate => candidate.test.test(text));
+      if (compoundPhrase) {
+        const concept = concepts.find(item => item.canonicalLabel === compoundPhrase.canonicalLabel);
+        if (concept) return output('resolved', compoundPhrase.confidenceTier ?? 'T2', [conceptView({
+          concept,
+          matchedSurface: compoundPhrase.matchedSurface,
+          matchType: 'patient_phrase'
+        })]);
+      }
+      const explicitMentions = earlyExplicitMentions;
+      const acneScarContext = !explicitMentions.some(item => item.concept.canonicalLabel === 'Acne Scars') && /\bacne\b/.test(text) && /\bscar(?:s|ring)?\b/.test(text);
       if (explicitMentions.length >= 2 && /\b(?:and|or|versus|vs)\b/.test(text) && !acneScarContext) {
         const views = explicitMentions.map(item => conceptView({ concept: item.concept, matchedSurface: item.concept.canonicalLabel, matchType: 'explicit_multi' }));
         return output('multi_match', 'T2', views);

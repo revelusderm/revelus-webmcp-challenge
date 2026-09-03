@@ -52,7 +52,7 @@ small, typed tool layer directly to the page with
 
 The implementation demonstrates:
 
-- **Page-local WebMCP tools.** Four tools are registered by the page and share
+- **Page-local WebMCP tools.** Three focused tools are registered by the page and share
   the same execution layer as the visible interface.
 - **Grounded retrieval.** Search results and answers are projected from a
   reviewed corpus and include canonical source URLs.
@@ -87,7 +87,7 @@ distinguished. The relevant scope for this submission is:
 | Predates the challenge | Built during the challenge submission period |
 | --- | --- |
 | Revelus Dermatology as an existing practice and brand | The standalone [Revelus.ai](https://revelus.ai/) agent-facing experience |
-| The existing [revelusdermatology.com](https://revelusdermatology.com/) website and its conventional navigation | The page-local WebMCP integration and four registered tools |
+| The existing [revelusdermatology.com](https://revelusdermatology.com/) website and its conventional navigation | The page-local WebMCP integration and three registered tools |
 | Previously published practice content, provider information, brand assets, and photography | The structured content-matching, canonical-answer, and page-card projection layers |
 | Existing business rules and appointment offerings | The typed, non-diagnostic visit-path resolver and its assistant-facing contracts |
 | The practice's existing NextPatient scheduling system and live appointment inventory | The read-only availability adapter, outbound-link validation, and human-controlled scheduling handoff |
@@ -195,7 +195,7 @@ design.
 
 ## WebMCP tool surface
 
-All four tools are registered in
+All three native tools are registered in
 [`src/challenge-tools.mjs`](src/challenge-tools.mjs). Their JSON input schemas
 are defined in
 [`src/challenge-contract.mjs`](src/challenge-contract.mjs) and
@@ -204,9 +204,14 @@ are defined in
 | Tool | Purpose | Required input | Effect |
 | --- | --- | --- | --- |
 | `revelus.search_information` | Search published conditions, services, providers, resources, and canonical Q&A. | `query` string; optional `limit` from 1–10 | Read-only; returns ranked page cards or a privacy refusal. |
-| `revelus.get_answer` | Return the exact published answer or page fallback for a prior search result. | `entryId` from a search result | Read-only; returns an answer with source context. |
 | `revelus.resolve_visit_path` | Convert structured booking facts into a validated visit path or staff-assisted guidance. | A supported `routeKey` or one of the typed intent shapes | Updates the in-page plan only; does not contact an external system. |
 | `revelus.get_availability` | Read current provider/time information for a resolved path. | `pathId` returned by the resolver | Read-only; returns review links and never holds or books a time. |
+
+Search returns the complete page card, including its answer evidence and
+`responseGuidance`, so an agent does not need a second round trip. The page and
+HTTP compatibility layer retain an internal answer action for opening card
+sections, but `revelus.get_answer` is intentionally not registered as a native
+WebMCP tool.
 
 The search description explicitly instructs clients to use short,
 de-identified topic language. The visit resolver rejects extra properties and
@@ -363,7 +368,9 @@ The tests assert that:
 - the query fixture contains exactly ten cases;
 - each of the first nine queries ranks its documented source first;
 - the patient-record query is refused with no results; and
-- all four named WebMCP tools register with executable handlers.
+- all three named WebMCP tools register with executable handlers; and
+- every returned card carries a source-backed practice statement, a clinical
+  boundary, and `patientConclusion: "not_determined"`.
 
 There are no runtime npm dependencies. `npm ci` installs the locked project
 metadata, and the implementation uses Node.js and browser platform APIs.

@@ -30,5 +30,13 @@ for (const item of fixture.questions) {
     }
     assert.equal(result.status, 'found');
     assert.equal(result.results[0]?.sourceUrl, item.expected.target);
+    for (const card of result.results) {
+      assert.equal(card.responseGuidance.patientConclusion, 'not_determined');
+      assert.ok(card.responseGuidance.practiceStatement.length > 10);
+      assert.ok(card.responseGuidance.clinicalBoundary.length > 20);
+    }
+    if (item.id === 1) {
+      assert.equal(result.results[0].responseGuidance.practiceStatement, 'Revelus evaluates and treats eczema.');
+    }
   });
 }

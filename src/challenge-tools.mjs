@@ -139,7 +139,7 @@ export function projectAvailability(raw, context) {
 const TOOL_META = Object.freeze({
   [SEARCH_TOOL_NAME]: {
     title: 'Search Revelus Information',
-    description: 'Search published Revelus conditions, services, providers, and canonical Q&A. Start with limit 4 and request more only when needed. Describe the topic or symptom in short, de-identified terms (e.g. "itchy rash", "hair loss options"). Never include patient identity — names, contact details, dates of birth — or photos, records requests, or personal medical history.',
+    description: 'Search published Revelus conditions, services, providers, and canonical Q&A. Each result is a complete page card with its published summary, FAQs, relationships, providers, actions, scheduling policy, responseGuidance, and source URL; use it directly without a follow-up answer lookup. Use responseGuidance.practiceStatement together with responseGuidance.clinicalBoundary as written. A page match never determines a patient diagnosis, treatment choice, or provider choice, and responseGuidance.patientConclusion always remains not_determined. Start with limit 4 and request more only when needed. Describe the topic or symptom in short, de-identified terms (e.g. "itchy rash", "hair loss options"). Never include patient identity — names, contact details, dates of birth — or photos, records requests, or personal medical history.',
     inputSchema: searchInputSchema,
     phase: 'search'
   },
@@ -147,7 +147,11 @@ const TOOL_META = Object.freeze({
     title: 'Get Revelus Standard Answer',
     description: 'Return an exact published Revelus answer or a source-page fallback for a result from revelus.search_information. This is informational only and does not diagnose or personalize treatment.',
     inputSchema: answerInputSchema,
-    phase: 'answer'
+    phase: 'answer',
+    // Search already returns the complete page card. Keep this action for the
+    // page accordion and /api/answer compatibility, but do not make an agent
+    // spend another native WebMCP round trip retrieving duplicate content.
+    exposeToWebMcp: false
   },
   [RESOLVE_TOOL_NAME]: {
     title: 'Resolve Revelus Visit Path',
@@ -226,7 +230,12 @@ export function createChallengeActions({
     answer: (input, options) => invoke(ANSWER_TOOL_NAME, input, options),
     resolve: (input, options) => invoke(RESOLVE_TOOL_NAME, input, options),
     availability: (input, options) => invoke(AVAILABILITY_TOOL_NAME, input, options),
-    definitions: Object.entries(TOOL_META).map(([name, meta]) => ({ name, ...meta }))
+    definitions: Object.entries(TOOL_META)
+      .filter(([, meta]) => meta.exposeToWebMcp !== false)
+      .map(([name, meta]) => {
+        const { exposeToWebMcp: _exposeToWebMcp, ...definition } = meta;
+        return { name, ...definition };
+      })
   };
 }
 

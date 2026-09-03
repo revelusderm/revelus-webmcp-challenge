@@ -9,6 +9,11 @@ const STOP = new Set([
   'with','would','you','your'
 ]);
 const SANITY_FILLER = new Set([...STOP, 'about', 'any', 'current', 'doctor', 'dr', 'published', 'tell', 'there', 'treat', 'who']);
+const LOW_SIGNAL_TERMS = new Set([
+  'appointment', 'care', 'consultation', 'information', 'option', 'options',
+  'page', 'read', 'revelus', 'service', 'services', 'skin', 'treat', 'treated',
+  'treatment', 'treatments', 'visit'
+]);
 const EXCLUDED_SEARCH_TERMS = /\botchere\b/i;
 const ALIASES = new Map([
   ['full skin check', 'skin cancer screening full body exam'],
@@ -41,6 +46,10 @@ const ALIASES = new Map([
   ['double chin', 'kybella'],
   ['lip injections', 'juvederm lip filler'],
   ['lip filler', 'juvederm fillers in austin'],
+  ['chin filler', 'restylane juvederm dermal filler chin'],
+  ['under eye filler', 'restylane dermal filler under eyes'],
+  ['skinpen', 'microneedling acne scars'],
+  ['acne scarring', 'acne scars'],
   // Common misspellings → published condition names.
   ['sorriasis', 'psoriasis'],
   ['soriasis', 'psoriasis'],
@@ -94,6 +103,8 @@ const ALIASES = new Map([
   ['changing mole', 'melanoma'],
   ['spot that keeps growing', 'melanoma mole'],
   ['raised scar', 'keloid'],
+  ['growing beyond the original', 'keloid'],
+  ['beyond the original wound', 'keloid'],
   ['accutane', 'isotretinoin acne evaluation management'],
   ['bleeds', 'basal cell carcinoma'],
   ['wont heal', 'squamous cell carcinoma basal'],
@@ -108,6 +119,18 @@ const ALIASES = new Map([
   ['skin exam', 'skin cancer screening'],
   ['video visit', 'telemedicine'],
   ['video call', 'telemedicine'],
+  ['video appointment', 'telemedicine virtual appointment'],
+  ['telehealth', 'telemedicine virtual appointment'],
+  ['stressful event', 'telogen effluvium hair loss shedding'],
+  ['stress followed by', 'telogen effluvium hair loss shedding'],
+  ['deep painful bumps', 'hidradenitis suppurativa'],
+  ['underarms and groin', 'hidradenitis suppurativa'],
+  ['rough scaly spot', 'actinic keratosis'],
+  ['sun exposed forearm', 'actinic keratosis'],
+  ['flaky and red', 'dandruff seborrheic dermatitis rosacea'],
+  ['oily but also flaky', 'standard medical appointment multiple concerns'],
+  ['tiny hard white bumps', 'focused appointment'],
+  ['wedding', 'standard cosmetic consultation aesthetician consultation'],
   ['follow up appointment', 'follow-up evaluation'],
   ['follow up visit', 'follow-up evaluation'],
   // 2026-09-02 randomizer feedback remaps (practice-reviewed).
@@ -116,6 +139,9 @@ const ALIASES = new Map([
   ['between my toes', 'ringworm athletes foot tinea'],
   ['ingrown hair', 'folliculitis razor bumps'],
   ['underarms are darker', 'hyperpigmentation dark patches'],
+  ['underarms has become darker', 'hyperpigmentation dark patches'],
+  ['underarms have become darker', 'hyperpigmentation dark patches'],
+  ['itchy blistering rash after hiking', 'contact dermatitis rash evaluation'],
   ['tanning bed', 'skin cancer screening sun damage'],
   ['full body check', 'skin cancer screening'],
   ['full body scan', 'skin cancer screening'],
@@ -168,27 +194,53 @@ const TOPIC_ANCHORS = [
   { test: /\bskin\s+biops(?:y|ies)\b/, terms: ['skin', 'biopsy'] },
   { test: /\bcoolsculpting\b/, terms: ['coolsculpting'] },
   { test: /\bacne\s+scars?\b/, terms: ['acne', 'scar'] },
+  { test: /\bacne\s+scarring\b/, terms: ['acne', 'scar'] },
   { test: /\bacne\b/, terms: ['acne'] },
   { test: /\bacnee\b/, terms: ['acne'] },
   { test: /\brash(?:es)?\b/, terms: ['rash'] },
-  { test: /\b(?:full\s+)?skin\s+check\b/, terms: ['screening'] },
-  { test: /\bwhite\s+(?:patches|spots)\b/, terms: ['vitiligo'] },
+  { test: /\b(?:refill|prescription|cream)\b.*\b(?:telemedicine|telehealth|virtual(?:ly)?|video)\b|\b(?:telemedicine|telehealth|virtual(?:ly)?|video)\b.*\b(?:refill|prescription|cream)\b/, terms: ['prescription refills'], sourceOnly: true, multiCandidate: true, boost: 54 },
+  { test: /\b(?:telemedicine|telehealth|virtual|video (?:visit|call|appointment))\b/, terms: ['telemedicine'], sourceOnly: true, multiCandidate: true },
+  { test: /\b(?:full\s+)?skin\s+check\b/, terms: ['screening'], boost: 42 },
+  { test: /\bwhite\s+(?:patch|patches|spot|spots)\b/, terms: ['vitiligo'] },
   { test: /\blight\s+patches\b/, terms: ['tinea', 'versicolor'], sourceOnly: true, multiCandidate: true },
   { test: /\blight\s+patches\b/, terms: ['vitiligo'], sourceOnly: true, multiCandidate: true },
   { test: /\btoenails?\b|\bnail\s+problem\b/, terms: ['nail'], sourceOnly: true },
   { test: /\bkeloids?\b|\braised\s+scar\b|\bscar\s+is\s+raised\b/, terms: ['keloid'], sourceOnly: true, multiCandidate: true },
   { test: /\bkeloids?\b|\braised\s+scar\b|\bscar\s+is\s+raised\b/, terms: ['scar'], sourceOnly: true, multiCandidate: true },
+  { test: /\b(?:scar|growth)\b.*\bbeyond\b.*\b(?:wound|hole|original)\b/, terms: ['keloid'], sourceOnly: true },
+  { test: /\bskin\s+tags?\b.*\b(?:remove|removed|removal|same appointment|consultation)\b|\b(?:remove|removed|removal)\b.*\bskin\s+tags?\b/, terms: ['skin tag removal'], sourceOnly: true, boost: 36 },
   { test: /\bskin\s+tags?\b/, terms: ['skin', 'tag'], sourceOnly: true },
+  { test: /\bcysts?\b.*\b(?:remove|removed|removal|same appointment|evaluation)\b|\b(?:remove|removed|removal)\b.*\bcysts?\b/, terms: ['cyst removal'], sourceOnly: true, boost: 36 },
+  { test: /\bdermaplaning\b/, terms: ['dermaplaning'], sourceOnly: true },
+  { test: /\bphotofractional\b/, terms: ['photofractional'], sourceOnly: true },
+  { test: /\bipl\b/, terms: ['ipl'], sourceOnly: true },
+  { test: /\bvisia\b/, terms: ['visia'], sourceOnly: true, boost: 54 },
+  { test: /\bsun\s*spots?\b.*\b(?:spa|consultation|aesthetician|dermatologist)\b|\b(?:spa|consultation|aesthetician|dermatologist)\b.*\bsun\s*spots?\b/, terms: ['discoloration consultation'], sourceOnly: true, boost: 42 },
   { test: /\bfacials?\b/, terms: ['facial'] },
   { test: /\bpeels?\b/, terms: ['peel'] },
   { test: /\bfocused\s+(?:visit|appointment)\b/, terms: ['focused'], sourceOnly: true },
   { test: /\bstandard\s+(?:visit|appointment)\b/, terms: ['standard', 'appointment'], sourceOnly: true },
+  { test: /\boily\b.*\bflaky\b|\bflaky\b.*\boily\b/, terms: ['standard', 'appointment'], sourceOnly: true },
   { test: /\bproviders?\b.*\bcosmetic\s+treatments?\b|\bcosmetic\s+treatments?\b.*\bproviders?\b/, terms: ['cosmetic'], sourceOnly: true },
   { test: /\bwrinkle\s+injections?\b|\banti[- ]wrinkle\b/, terms: ['botox'] },
   { test: /\blip\s+(?:injections?|fillers?)\b/, terms: ['juvederm'], sourceOnly: true, multiCandidate: true, boost: 24 },
   { test: /\blip\s+(?:injections?|fillers?)\b/, terms: ['restylane'], sourceOnly: true, multiCandidate: true },
+  { test: /\bchin\s+fillers?\b/, terms: ['restylane'], sourceOnly: true, multiCandidate: true, boost: 24 },
+  { test: /\bchin\s+fillers?\b/, terms: ['juvederm'], sourceOnly: true, multiCandidate: true },
+  { test: /\bunder[\s-]?eye\s+fillers?\b/, terms: ['restylane'], sourceOnly: true, boost: 24 },
+  { test: /\bskinpen\b/, terms: ['microneedling'], sourceOnly: true, multiCandidate: true, boost: 42 },
+  { test: /\b(?:rolling|tethered)\b.*\bacne\s+scars?\b|\bacne\s+scars?\b.*\b(?:rolling|tethered)\b/, terms: ['subcision'], sourceOnly: true, multiCandidate: true, boost: 54 },
+  { test: /\btoenail\s+fungus\b|\bnail\s+fungus\b/, terms: ['nail fungus'], sourceOnly: true, boost: 36 },
+  { test: /\bitchy\b.*\bblister(?:ing|s)?\b.*\b(?:hiking|plants?|outdoors?)\b|\b(?:hiking|plants?|outdoors?)\b.*\bitchy\b.*\bblister/, terms: ['contact dermatitis'], sourceOnly: true, boost: 36 },
+  { test: /\bunderarms?\b.*\b(?:darker|darkened|velvety)\b|\b(?:darker|darkened|velvety)\b.*\bunderarms?\b/, terms: ['hyperpigmentation'], sourceOnly: true, boost: 30 },
+  { test: /\bnon injectable\b.*\b(?:pigmentation|dark spots?|discoloration)\b|\b(?:pigmentation|dark spots?|discoloration)\b.*\bnon injectable\b/, terms: ['hyperpigmentation'], sourceOnly: true, boost: 36 },
   { test: /\bbirthmarks?\b/, terms: ['birthmark'] },
   { test: /\bwelts\b/, terms: ['hives'] },
+  { test: /\bdeep\s+painful\s+bumps?\b.*\b(?:underarms?|groin)\b|\b(?:underarms?|groin)\b.*\bdeep\s+painful\s+bumps?\b/, terms: ['hidradenitis', 'suppurativa'], sourceOnly: true },
+  { test: /\brough\s+scaly\s+spot\b.*\b(?:sun|forearm)\b|\b(?:sun[\s-]?exposed|forearm)\b.*\brough\s+scaly\s+spot\b/, terms: ['actinic', 'keratosis'], sourceOnly: true },
+  { test: /\b(?:pearly|shiny)\s+(?:spot|bump)\b.*\bbleed/, terms: ['basal', 'cell', 'carcinoma'], sourceOnly: true },
+  { test: /\b(?:spot|sore|bump)\b.*\bbleed\w*\b.*\b(?:wont|will not|does not)\s+heal\b/, terms: ['basal', 'cell', 'carcinoma'], sourceOnly: true, multiCandidate: true },
+  { test: /\b(?:spot|sore|bump)\b.*\bbleed\w*\b.*\b(?:wont|will not|does not)\s+heal\b/, terms: ['squamous', 'cell', 'carcinoma'], sourceOnly: true, multiCandidate: true },
   { test: /\bsilvery\s+scaly\s+patches\b/, terms: ['psoriasis'], sourceOnly: true },
   // Misspelled condition names anchor to the intended page.
   { test: /\bsorriasis\b|\bsoriasis\b|\bpsorasis\b|\bpsoriases\b/, terms: ['psoriasis'] },
@@ -368,6 +420,14 @@ const SOURCE_ROUTES = new Map([
 const MATCHABLE_ENTITY_KINDS = new Set(['condition', 'cosmetic_service', 'medical_service', 'provider']);
 const RELATIONSHIP_SOURCE_KINDS = new Set(['condition', 'cosmetic_service', 'medical_service']);
 const PROVIDER_INTENT = /(?:\bwho\b.*\b(?:does|performs?|provides?|offers?|handles?|treats?|providers?|doctors?|dermatologists?|surgeons?)\b|\bwhich\s+(?:providers?|doctors?|dermatologists?|surgeons?)\b|\b(?:providers?|doctors?|dermatologists?|surgeons?)\s+(?:for|who|does|do|performs?|offer|offers?|handles?|treats?)\b|\bdoes\s+(?!revelus\b)(?:dr\s+)?[a-z][a-z.-]+\s+[a-z][a-z.-]+\b.*\b(?:perform|provide|offer|handle|treat)s?\b)/i;
+
+function isProviderIntent(query) {
+  const normalized = normalize(query);
+  if (/\b(?:spa|aesthetician|cosmetic)\s+consultation\b.*\bor\b.*\bdermatologist\b/.test(normalized)) return false;
+  const comparesProviderTypes = /\b(?:dermatologist|doctor|surgeon)\b.*\bor\b.*\b(?:dermatologist|doctor|surgeon)\b/.test(normalized);
+  if (comparesProviderTypes && !/\b(?:who|which)\b.*\bat revelus\b/.test(normalized)) return false;
+  return PROVIDER_INTENT.test(normalized);
+}
 function normalize(value) {
   // Fold diacritics so published names like "Juvéderm" match the plain
   // spellings patients type.
@@ -415,7 +475,7 @@ function log1p(value) {
 
 function queryIntent(query) {
   const normalized = normalize(query);
-  if (PROVIDER_INTENT.test(normalized)) return 'provider_lookup';
+  if (isProviderIntent(normalized)) return 'provider_lookup';
   if (/\b(?:versus|vs|difference|different|better)\b|\bor\b/.test(normalized)) return 'comparison';
   if (/\b(?:price|cost|how much|self pay|cash)\b/.test(normalized)) return 'price_policy';
   if (/\b(?:and|also)\b/.test(normalized)) return 'multi_concern';
@@ -424,71 +484,144 @@ function queryIntent(query) {
   return 'topic_exploration';
 }
 
+const ANSWER_CUES = [
+  { query: /\b(?:price|cost|how much|self pay|cash)\b/, answer: /\b(?:price|cost|how much|self pay|cash|fee)\b/ },
+  { query: /\b(?:insurance|covered|coverage|out of network)\b/, answer: /\b(?:insurance|covered|coverage|out of network|self pay)\b/ },
+  { query: /\b(?:telemedicine|telehealth|virtual|video)\b/, answer: /\b(?:telemedicine|telehealth|virtual|video)\b/ },
+  { query: /\b(?:refill|prescription|cream)\b.*\b(?:telemedicine|telehealth|virtual(?:ly)?|video)\b|\b(?:telemedicine|telehealth|virtual(?:ly)?|video)\b.*\b(?:refill|prescription|cream)\b/, answer: /\b(?:refills? over telemedicine|prescriptions? through (?:a )?telemedicine|telemedicine.{0,24}(?:refill|prescription))\b/ },
+  { query: /\b(?:evaluat|check)\w*\b.*\b(?:telemedicine|telehealth|virtual|video)\b|\b(?:telemedicine|telehealth|virtual|video)\b.*\b(?:evaluat|check)\w*\b/, answer: /\b(?:as effective as in person|initial consultations?|managed virtually|require an in person)\b/ },
+  { query: /\b(?:how many|number of)\b.*\b(?:sessions?|treatments?|visits?)\b/, answer: /\b(?:how many|number of|sessions?)\b/ },
+  { query: /\b(?:downtime|recovery|healing)\b/, answer: /\b(?:downtime|recovery|healing|aftercare|after treatment)\b/ },
+  { query: /\bconsultation\b.*\bbefore\b|\bbefore\b.*\bconsultation\b/, answer: /\bconsultation\b.*\bbefore\b|\bbefore\b.*\bconsultation\b|\bconsultation comes first\b/ },
+  { query: /\b(?:show|see|notice)\b.*\bresults?\b|\bresults?\b.*\b(?:show|appear|notice)\b/, answer: /\b(?:when will i see results|results timeline|results? (?:typically )?(?:appear|develop|become|noticeable))\b/ },
+  { query: /\b(?:dissolv|revers)\w*\b/, answer: /\b(?:dissolv|revers|hyaluronidase)\w*\b/, evidenceBoost: 84 },
+  { query: /\bfee\b.*\b(?:appl|credit|toward)\w*\b|\b(?:appl|credit)\w*\b.*\bfee\b/, answer: /\b(?:appl|credit|toward)\w*\b/, evidenceBoost: 60 },
+  { query: /\b(?:same day|same appointment|at (?:the|my) (?:consultation|evaluation))\b/, answer: /\b(?:same day|same appointment|consultation|evaluation|one visit)\b/ },
+  { query: /\b(?:frown lines?|lines? between (?:my |the )?(?:eye)?brows?|11s)\b/, answer: /\b(?:what areas can botox treat|frown lines?|between the brows?|glabellar)\b/, evidenceBoost: 84 },
+  { query: /\b(?:used|treated|work)\b.*\b(?:upper arms?|arms?|abdomen|flanks?|thighs?|chin|jawline|back)\b/, answer: /\b(?:what areas can be treated|treatment (?:areas?|zones?)|upper arms?|arms?|abdomen|flanks?|thighs?|chin|jawline|back)\b/ },
+  { query: /\breferral\b/, answer: /\breferral\b/ },
+  { query: /\b(?:difference|different|compare|versus|vs)\b/, answer: /\b(?:difference|different|compare|versus|vs)\b/ },
+  { query: /\b(?:included|include|contains|what is in)\b/, answer: /\b(?:included|include|contains|what is in)\b/ },
+  { query: /\b(?:labs?|laboratory|blood work|monitoring)\b/, answer: /\b(?:labs?|laboratory|blood work|monitoring|management)\b/ },
+  { query: /\bsent (?:off )?to pathology\b/, answer: /\bsent (?:off )?to pathology\b/, evidenceBoost: 120 },
+  { query: /\bpathology\b/, answer: /\b(?:pathology|pathological|lab)\b/, evidenceBoost: 84 },
+  { query: /\b(?:treatment options|which (?:revelus )?treatments|what treatments|how (?:is|are).+treated)\b/, answer: /\b(?:treatment options|which treatments|what treatments|how (?:is|are).+treated|recommended)\b/ }
+];
+
+function buildQueryContext(query, applyTopicAnchor = true) {
+  const normalizedQuery = normalize(query);
+  const queryTerms = [...new Set(tokens(expandQuery(query)))].sort();
+  const intent = queryIntent(normalizedQuery);
+  const matchedTopics = applyTopicAnchor ? TOPIC_ANCHORS.filter(candidate => candidate.test.test(normalizedQuery)) : [];
+  const topics = ['comparison', 'multi_concern'].includes(intent) || matchedTopics.some(topic => topic.multiCandidate)
+    ? matchedTopics
+    : matchedTopics.slice(0, 1);
+  return {
+    normalizedQuery,
+    queryTerms,
+    intent,
+    providerIntent: isProviderIntent(normalizedQuery),
+    topics,
+    hasMultiCandidateAnchor: matchedTopics.some(candidate => candidate.multiCandidate),
+    phrase: tokens(query).join(' '),
+    coreQueryTerms: [...new Set(tokens(query).filter(term => !LOW_SIGNAL_TERMS.has(term)))],
+    factPrecisionIntent: /\b(?:minimum|maximum|duration)\b/.test(normalizedQuery),
+    activeAnswerCues: ANSWER_CUES.filter(cue => cue.query.test(normalizedQuery))
+  };
+}
+
+function answerCueAdjustment(entry, activeCues, title, evidence) {
+  if (!['faq', 'fact'].includes(entry.kind)) return 0;
+  let adjustment = 0;
+  for (const cue of activeCues) {
+    if (cue.answer.test(title)) adjustment += 96;
+    else if (cue.answer.test(evidence)) adjustment += cue.evidenceBoost ?? 32;
+    else adjustment -= 36;
+  }
+  return adjustment;
+}
+
+function entryContradictsQuery(query, entry, normalizedQuery = normalize(query)) {
+  const subject = normalize(`${entry.title} ${entry.sourceUrl}`);
+  const menSpecific = /\b(?:for men|men|male|masculine)\b/.test(subject);
+  if (menSpecific && !/\b(?:for men|men|man|male|masculine)\b/.test(normalizedQuery)) return true;
+  const excludesInjections = (
+    /\bnon injectable\b/.test(normalizedQuery) ||
+    /\b(?:not interested in|without|avoid|no)\b.{0,32}\b(?:injections?|injectables?)\b/.test(normalizedQuery)
+  );
+  if (excludesInjections && /\b(?:injections?|injectables?|botox|dysport|xeomin|jeuveau|fillers?|juvederm|restylane|radiesse|sculptra)\b/.test(subject)) return true;
+  const excludesFacial = /\bwithout\b.{0,24}\bfacials?\b/.test(normalizedQuery);
+  if (excludesFacial && /\bfacials?\b/.test(subject)) return true;
+  return false;
+}
+
 function topicMatches(topic, topicSubject, sourceUrl) {
   const target = topic.sourceOnly ? sourceUrl : topicSubject;
   return topic.terms.every(term => target.includes(term));
 }
 
-function scoreEntry(query, entry, explicitSourceUrl = null, applyTopicAnchor = true) {
-  const queryTerms = [...new Set(tokens(expandQuery(query)))].sort();
+function scoreEntry(query, entry, explicitSourceUrl = null, applyTopicAnchor = true, queryContext = null) {
+  const context = queryContext ?? buildQueryContext(query, applyTopicAnchor);
+  const { normalizedQuery, queryTerms, intent, providerIntent, topics } = context;
   if (!queryTerms.length) return 0;
-  const intent = queryIntent(query);
-  const providerIntent = PROVIDER_INTENT.test(normalize(query));
+  if (entryContradictsQuery(query, entry, normalizedQuery)) return 0;
   if (entry.kind === 'provider_relationship' && !providerIntent) return 0;
   const allowRelatedSources = (
     ['comparison', 'multi_concern'].includes(intent) && !explicitSourceUrl?.includes('/providers/')
-  ) || /\bscar\s+is\s+raised\b/.test(normalize(query));
+  ) || context.hasMultiCandidateAnchor || /\bscar\s+is\s+raised\b/.test(normalizedQuery);
   if (explicitSourceUrl && entry.sourceUrl !== explicitSourceUrl && !allowRelatedSources) return 0;
-  const broadOverview = /^(?:does revelus treat|what should i know about|who is)\b/.test(normalize(query));
+  const broadOverview = /^(?:does revelus treat|what should i know about|who is)\b/.test(normalizedQuery);
   if (broadOverview && !providerIntent && !entry.entryId.startsWith('page:')) return 0;
-  const matchedTopics = applyTopicAnchor ? TOPIC_ANCHORS.filter(candidate => candidate.test.test(normalize(query))) : [];
-  const topics = ['comparison', 'multi_concern'].includes(intent) || matchedTopics.some(topic => topic.multiCandidate)
-    ? matchedTopics
-    : matchedTopics.slice(0, 1);
-  const topicSubject = normalize(`${entry.title} ${entry.sourceUrl}`);
-  const title = normalize(entry.title);
-  const text = normalize(entry.text);
-  const url = normalize(entry.sourceUrl);
+  const title = entry.normalizedTitle ?? normalize(entry.title);
+  const text = entry.normalizedText ?? normalize(entry.text);
+  const url = entry.normalizedUrl ?? normalize(entry.sourceUrl);
+  const topicSubject = `${title} ${url}`;
   if (topics.length && !topics.some(topic => topicMatches(topic, topicSubject, url))) return 0;
   let score = 0;
   let matched = 0;
+  let meaningfulMatched = 0;
   for (const term of queryTerms) {
     const titleCount = title.split(term).length - 1;
     const textCount = text.split(term).length - 1;
     const urlCount = url.split(term).length - 1;
     if (titleCount || textCount || urlCount) matched += 1;
-    score += titleCount * 8;
-    score += log1p(textCount) * 2.5;
-    score += Math.min(urlCount, 2) * 3;
+    if ((titleCount || textCount || urlCount) && !LOW_SIGNAL_TERMS.has(term)) meaningfulMatched += 1;
+    const signalWeight = LOW_SIGNAL_TERMS.has(term) ? 0.2 : 1;
+    score += titleCount * 8 * signalWeight;
+    score += log1p(textCount) * 2.5 * signalWeight;
+    score += Math.min(urlCount, 2) * 3 * signalWeight;
   }
   score += 10 * matched / queryTerms.length;
   if (queryTerms.every(term => title.includes(term))) score += 12;
-  const phrase = tokens(query).join(' ');
+  const phrase = context.phrase;
   if (phrase && tokens(entry.title).join(' ').includes(phrase)) score += 18;
-  const evidenceTitle = tokens(entry.title).join(' ');
-  if (evidenceTitle.length >= 5 && phrase.includes(evidenceTitle)) score += 36;
-  const factPrecisionIntent = /\b(?:minimum|maximum|duration)\b/.test(normalize(query));
-  const directIntent = ['direct_answer', 'price_policy', 'comparison'].includes(intent);
+  const evidenceTitleTerms = tokens(entry.title);
+  const evidenceTitle = evidenceTitleTerms.join(' ');
+  const specificEvidenceTerms = evidenceTitleTerms.filter(term => !LOW_SIGNAL_TERMS.has(term));
+  if (entry.kind === 'faq' && specificEvidenceTerms.length >= 2 && normalizedQuery.includes(title)) score += 140;
+  else if (evidenceTitle.length >= 5 && phrase.includes(evidenceTitle)) score += 36;
+  const factPrecisionIntent = context.factPrecisionIntent;
+  const directIntent = ['direct_answer', 'price_policy', 'comparison', 'visit_routing'].includes(intent);
   if (entry.kind === 'faq' && directIntent && !factPrecisionIntent) {
     const questionTerms = new Set(tokens(entry.title));
-    const coreQueryTerms = [...new Set(tokens(query))];
+    const coreQueryTerms = context.coreQueryTerms;
     const overlap = coreQueryTerms.filter(term => questionTerms.has(term)).length;
     const coverage = coreQueryTerms.length ? overlap / coreQueryTerms.length : 0;
     score += coverage * 55;
     if (coverage >= 0.6) score += 30;
   }
+  score += answerCueAdjustment(entry, context.activeAnswerCues, title, text);
   if (entry.kind === 'fact') {
     const factLabel = normalize(entry.title.split(':').slice(1).join(':'));
-    if (factLabel.length >= 3 && normalize(query).includes(factLabel)) score += 140;
+    if (factLabel.length >= 3 && normalizedQuery.includes(factLabel)) score += 140;
   }
-  if (entry.kind === 'provider_relationship' && providerIntent) score += 120;
-  if (entry.kind === 'provider_relationship' && providerIntent) score += 100;
-  if (entry.kind === 'offer_collection' && /\b(?:specials?|promotions?|offers?)\b/i.test(normalize(query))) score += 120;
-  if (entry.kind === 'fact' && /\b(?:what happens|during|procedure|performed|done)\b/i.test(normalize(query))) score += 18;
+  if (entry.kind === 'provider_relationship' && providerIntent) score += 180;
+  if (entry.kind === 'offer_collection' && /\b(?:specials?|promotions?|offers?)\b/i.test(normalizedQuery)) score += 120;
+  if (entry.kind === 'fact' && /\b(?:what happens|during|procedure|performed|done)\b/i.test(normalizedQuery)) score += 18;
   if (entry.kind === 'fact' && factPrecisionIntent) score += 90;
-  if (!matched) return 0;
+  if (!matched || (!meaningfulMatched && !topics.length && !explicitSourceUrl)) return 0;
   if (entry.kind === 'faq') score += 4;
-  if (FAQ_POLICIES.has(entry.entryId) && /\b(?:kids?|children|minors?|pediatric)\b/.test(normalize(query))) score += 40;
+  if (FAQ_POLICIES.has(entry.entryId) && /\b(?:kids?|children|minors?|pediatric)\b/.test(normalizedQuery)) score += 40;
   if (explicitSourceUrl && entry.sourceUrl === explicitSourceUrl) score += 30;
   for (const topic of topics) {
     if (!topicMatches(topic, topicSubject, url)) continue;
@@ -656,7 +789,13 @@ export function createKnowledgeBase({ corpus, searchIndex, curatedRecords = [] }
   const curatedProjection = buildCuratedProjection(curatedRecords);
   const publicEntityNames = corpus.records.map(record => record.wordpressTitle);
   const providerProjection = buildProviderRelationshipProjection(corpus.records);
-  const searchEntries = [...searchIndex.entries, ...curatedProjection.searchEntries, ...providerProjection.searchEntries];
+  const searchEntries = [...searchIndex.entries, ...curatedProjection.searchEntries, ...providerProjection.searchEntries]
+    .map(entry => ({
+      ...entry,
+      normalizedTitle: normalize(entry.title),
+      normalizedText: normalize(entry.text),
+      normalizedUrl: normalize(entry.sourceUrl)
+    }));
   const searchVocabulary = new Set(searchEntries.flatMap(entry => tokens(`${entry.title} ${entry.text} ${entry.sourceUrl}`)));
   const entries = new Map(searchEntries.map(entry => [entry.entryId, entry]));
   const pages = new Map(corpus.records.map(record => [record.recordId, record]));
@@ -672,17 +811,21 @@ export function createKnowledgeBase({ corpus, searchIndex, curatedRecords = [] }
     assertSafeQuery(input, publicEntityNames);
     if (EXCLUDED_SEARCH_TERMS.test(input.query)) return [];
     const normalizedQuery = normalize(input.query);
+    const queryContext = buildQueryContext(input.query);
     const aliasApplied = [...ALIASES.keys()].some(phrase => normalizedQuery.includes(phrase));
     const sanityTerms = [...new Set(normalizedQuery.split(' ').filter(term => term && !SANITY_FILLER.has(term)))];
     if (!aliasApplied && sanityTerms.length <= 2 && sanityTerms.some(term => term.length >= 8 && !searchVocabulary.has(term))) return [];
-    const explicitSourceUrl = explicitSourceForQuery(expandQuery(input.query), entityMatchers);
+    const detectedSourceUrl = explicitSourceForQuery(expandQuery(input.query), entityMatchers);
+    const explicitSourceUrl = detectedSourceUrl && entryContradictsQuery(input.query, { title: '', sourceUrl: detectedSourceUrl }, normalizedQuery)
+      ? null
+      : detectedSourceUrl;
     const httpsEntries = searchEntries.filter(entry => entry.sourceUrl.startsWith('https://'));
     let scored = httpsEntries
-      .map(entry => ({ entry, score: scoreEntry(input.query, entry, explicitSourceUrl) }))
+      .map(entry => ({ entry, score: scoreEntry(input.query, entry, explicitSourceUrl, true, queryContext) }))
       .filter(item => item.score > 0);
     if (!scored.length && explicitSourceUrl) {
       scored = httpsEntries
-        .map(entry => ({ entry, score: scoreEntry(input.query, entry, null) }))
+        .map(entry => ({ entry, score: scoreEntry(input.query, entry, null, true, queryContext) }))
         .filter(item => item.score > 0);
     }
     return scored.sort((a, b) => b.score - a.score || a.entry.entryId.localeCompare(b.entry.entryId));
@@ -715,9 +858,14 @@ export function createKnowledgeBase({ corpus, searchIndex, curatedRecords = [] }
       const candidates = [...bestBySource.values()];
       const topScore = candidates[0]?.score ?? 0;
       const intent = queryIntent(input.query);
-      const intentCap = intent === 'provider_lookup' ? 4 : intent === 'comparison' ? 3 : intent === 'multi_concern' ? 5 : 5;
+      const intentCap = intent === 'provider_lookup' ? 4 : intent === 'comparison' ? 3 : intent === 'multi_concern' ? 5 : 4;
+      const relativeFloor = intent === 'provider_lookup'
+        ? 0.6
+        : ['comparison', 'multi_concern'].includes(intent)
+          ? 0.38
+          : 0.5;
       const relevant = candidates
-        .filter(candidate => candidate.score >= Math.max(10, topScore * 0.35))
+        .filter(candidate => candidate.score >= Math.max(12, topScore * relativeFloor))
         .slice(0, Math.min(limit, intentCap));
       const results = relevant.map(({ entry, score }) => {
         const card = pageCards.bySourceUrl(entry.sourceUrl, { entry });
@@ -787,9 +935,10 @@ export function createKnowledgeBase({ corpus, searchIndex, curatedRecords = [] }
       if (extra.length) throw new Error(`Unsupported source search fields: ${extra.join(', ')}`);
       assertSafeQuery({ query: input.query, ...(input.limit === undefined ? {} : { limit: input.limit }) }, publicEntityNames);
       if (typeof input.sourceUrl !== 'string' || !corpus.records.some(record => record.sourceUri === input.sourceUrl)) throw new Error('Unknown source URL');
+      const queryContext = buildQueryContext(input.query, false);
       const ranked = searchEntries
         .filter(entry => entry.sourceUrl === input.sourceUrl)
-        .map(entry => ({ entry, score: scoreEntry(input.query, entry, input.sourceUrl, false) }))
+        .map(entry => ({ entry, score: scoreEntry(input.query, entry, input.sourceUrl, false, queryContext) }))
         .filter(item => item.score > 0)
         .sort((a, b) => b.score - a.score || a.entry.entryId.localeCompare(b.entry.entryId))
         .slice(0, input.limit ?? 5)

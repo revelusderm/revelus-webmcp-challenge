@@ -30,13 +30,22 @@ export function validateNextPatientLink(href, { reasonId }) {
 
 function imageFromProvider(node) {
   const imageNode = node.querySelector('.nextpatient-provider-image-cell, .nextpatient-provider-small-photo');
-  const match = String(imageNode?.getAttribute('style') ?? '').match(/https:\/\/nextpatient\.co\/[^'")]+/);
+  const match = String(imageNode?.getAttribute('data-nextpatient-inline-style') ?? '').match(/https:\/\/nextpatient\.co\/[^'")]+/);
   return match?.[0] ?? null;
+}
+
+function neutralizeInlineStyleAttributes(html) {
+  // The scheduler returns provider portraits in inline background-image
+  // styles. Parsing those attributes under Revelus's strict CSP creates noisy
+  // browser violations even though the detached document is never rendered.
+  // Preserve the inert attribute text for URL extraction without treating it
+  // as CSS.
+  return String(html ?? '').replace(/(\s)style(\s*=)/gi, '$1data-nextpatient-inline-style$2');
 }
 
 export function parseNextPatientHtml(html, { reasonId, DOMParserCtor = globalThis.DOMParser } = {}) {
   if (typeof DOMParserCtor !== 'function') throw new Error('DOMParser is unavailable');
-  const doc = new DOMParserCtor().parseFromString(String(html ?? ''), 'text/html');
+  const doc = new DOMParserCtor().parseFromString(neutralizeInlineStyleAttributes(html), 'text/html');
   const providers = [];
   for (const node of doc.querySelectorAll('.nextpatient-provider')) {
     const name = node.querySelector('.nextpatient-provider-name')?.textContent?.trim();

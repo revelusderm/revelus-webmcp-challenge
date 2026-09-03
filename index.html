@@ -95,11 +95,10 @@
           <details id="webmcp-response-inspector" class="webmcp-inspector">
             <summary>WebMCP response inspector</summary>
             <div class="inspector-body">
-              <p>Four site tools are registered on <code>document.modelContext</code>. AI assistants and the controls on this page use the same handlers and update this same interface.</p>
+              <p>Three site tools are registered on <code>document.modelContext</code>. AI assistants and the controls on this page use the same handlers and update this same interface.</p>
               <div class="tool-table" role="table" aria-label="Registered WebMCP tools">
                 <div class="tool-row tool-head" role="row"><span role="columnheader">tool</span><span role="columnheader">what it does</span><span role="columnheader">access</span></div>
-                <div class="tool-row" role="row"><code role="cell">revelus.search_information</code><span role="cell">Searches ranked published pages</span><span role="cell">read-only</span></div>
-                <div class="tool-row" role="row"><code role="cell">revelus.get_answer</code><span role="cell">Returns the published page card and matched answer</span><span role="cell">read-only</span></div>
+                <div class="tool-row" role="row"><code role="cell">revelus.search_information</code><span role="cell">Returns complete ranked published page cards</span><span role="cell">read-only</span></div>
                 <div class="tool-row" role="row"><code role="cell">revelus.resolve_visit_path</code><span role="cell">Builds a validated appointment path</span><span role="cell">updates plan</span></div>
                 <div class="tool-row" role="row"><code role="cell">revelus.get_availability</code><span role="cell">Reads current NextPatient times</span><span role="cell">read-only</span></div>
               </div>
@@ -123,6 +122,7 @@
           <h2 id="results-title" tabindex="-1">published Revelus pages</h2>
           <button id="ask-again-button" class="text-button" type="button">Ask Something Else</button>
         </div>
+        <p id="results-guidance" class="results-guidance is-hidden">These pages are related to your question, but they are not a diagnosis. Seeing a condition here does not mean you have it.</p>
         <div id="results-list" class="results-list"></div>
         <div class="view-more-wrap"><button id="view-more-button" class="outline-button is-hidden" type="button">View More</button></div>
       </div>
