@@ -73,6 +73,46 @@ No external model API or API key is required to run this repository. A
 WebMCP-enabled client decides when to invoke the registered tools; the included
 page also provides controls for exercising the same handlers directly.
 
+### Why WebMCP
+
+```mermaid
+flowchart TB
+    Q1[Patient asks about a skin concern, treatment, provider, or appointment]
+
+    subgraph Conventional website or agent browsing
+        Q1 --> W[Search website pages individually]
+        W --> J[Decide which Revelus pages answer the question]
+        J --> I[Combine information, providers, and scheduling instructions]
+        I --> U[May still lack practice appointment rules and current times]
+    end
+
+    Q2[Patient asks the same question through an AI assistant]
+
+    subgraph Revelus.ai with WebMCP
+        Q2 --> T[AI assistant discovers tools published by Revelus.ai]
+        T --> C[Get an answer with its source, FAQs, and relevant providers]
+        C --> D{Does the patient want to explore an appointment?}
+        D -->|No| L[Stop with the information the patient needed]
+        D -->|Yes| N[Apply practice appointment rules and show current options]
+    end
+```
+
+### Learn, decide, and optionally act
+
+```mermaid
+flowchart LR
+    Q[Patient asks a question in everyday language] --> S[Search published Revelus practice information]
+    S --> E[Show source-backed details, FAQs, related pages, and providers]
+    E --> D{Does the patient ask to explore an appointment?}
+    D -->|No| L[Stop because no scheduling has started]
+    D -->|Yes| R[Apply Revelus appointment rules]
+    R --> A["Read current times from the Patient Booking System (NextPatient)"]
+    A --> H[Patient opens NextPatient and decides whether to book]
+```
+
+Education is a complete outcome. Search does not silently become consent to
+start a scheduling workflow.
+
 ## Built during the challenge
 
 This submission is a meaningful WebMCP extension of a pre-existing business
@@ -238,20 +278,11 @@ standard browser.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    A[Person or AI assistant] --> B[Page UI or document.modelContext]
-    B --> C[Shared challenge action layer]
-    C --> D[Search and answer]
-    C --> E[Visit-path resolver]
-    C --> F[Availability adapter]
-    D --> G[Same-origin API]
-    G --> H[(Synthetic corpus and search index)]
-    G --> I[(Curated records and language registry)]
-    E --> J[Validated in-page plan]
-    F --> K[Read-only NextPatient availability]
-    K --> L[User-controlled secure handoff]
-```
+![What we built: a WebMCP layer connecting reviewed practice information and scheduling rules to safe, patient-facing tools](assets/readme/what-we-built-webmcp.png)
+
+*The challenge work turns existing, authorized practice systems into three
+page-local WebMCP tools with source-backed answers, validated visit paths, and
+a human-controlled scheduling handoff.*
 
 ### Request flow
 
@@ -350,6 +381,11 @@ data that should not become part of Git history.
 
 ## Testing and verification
 
+![How automated build-time testing protects care quality and patient safety](assets/readme/safety-quality-testing.png)
+
+*Every production build checks answer quality and enforces the clinical,
+privacy, and human-control boundaries the product must not cross.*
+
 The standard pre-submission check is:
 
 ```bash
@@ -434,6 +470,31 @@ into “you have this condition” or “this treatment is right for you.”
 | Transport and browser controls | API requests are JSON-only and limited to 8 KB. Responses use `no-store`; static files are allowlisted; and the deployment applies a restrictive Content Security Policy, `nosniff`, no-referrer behavior, and same-origin opener isolation. | Boundary enforcement should not depend solely on cooperative client behavior. |
 
 ### Scheduling and workflow boundaries
+
+```mermaid
+flowchart TB
+    C[Patient asks to explore an appointment] --> V[Collect only approved, non-identifying choices]
+    V --> G{Apply the relevant practice appointment rule}
+
+    G --> M[Patient has Medicare<br/>use the Medicare appointment workflow]
+    G --> S[Skin cancer screening plus another concern<br/>create two separate appointment paths]
+    G --> P[Patient requests a procedure<br/>evaluation first or call the office]
+    G --> T[Treatment has a prerequisite<br/>confirm a recent consultation or package]
+    G --> X[Patient has two or three concerns<br/>use the staff-coordinated workflow]
+
+    M --> O[Approved appointment type or types]
+    S --> O
+    P --> O
+    T --> O
+    X --> O
+
+    O --> A{Can this appointment be scheduled online?}
+    A -->|Yes| N["Get current times from the Patient Booking System (NextPatient)"]
+    A -->|No| H[Tell the patient to call the office or use the secure scheduler]
+```
+
+The branches above are examples of independently enforced gates, not a claim
+that every request passes through every branch.
 
 | Gate or boundary | What happens | Why it exists |
 | --- | --- | --- |
