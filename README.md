@@ -248,10 +248,13 @@ are defined in
 | `revelus.get_availability` | Read current provider/time information for a resolved path. | `pathId` returned by the resolver | Read-only; returns review links and never holds or books a time. |
 
 Search returns the complete page card, including its answer evidence and
-`responseGuidance`, so an agent does not need a second round trip. The page and
-HTTP compatibility layer retain an internal answer action for opening card
-sections, but `revelus.get_answer` is intentionally not registered as a native
-WebMCP tool.
+`responseGuidance`, so an agent does not need a second round trip. The shared
+action contract still contains `revelus.get_answer`, and the page and HTTP
+compatibility layer retain it for opening card sections. It is deliberately
+excluded from native `document.modelContext` registration and is not used in
+the current three-tool demo because it became redundant once search began
+returning the complete card. The retained action will be re-reviewed later;
+until then, it must not be counted or described as a fourth native WebMCP tool.
 
 The search description explicitly instructs clients to use short,
 de-identified topic language. The visit resolver rejects extra properties and
@@ -279,6 +282,11 @@ standard browser.
 ## Architecture
 
 ![What we built: a WebMCP layer connecting reviewed practice information and scheduling rules to safe, patient-facing tools](assets/readme/what-we-built-webmcp.png)
+
+*This visual describes the live production Revelus.ai deployment, including
+its 149-record private corpus. The public repository uses seven synthetic
+records, ten supported demo queries, and six patient-language concepts while
+preserving the same three-tool architecture and safety boundaries.*
 
 *The challenge work turns existing, authorized practice systems into three
 page-local WebMCP tools with source-backed answers, validated visit paths, and
@@ -381,10 +389,13 @@ data that should not become part of Git history.
 
 ## Testing and verification
 
-![How automated build-time testing protects care quality and patient safety](assets/readme/safety-quality-testing.png)
+![How pre-deployment testing protects care quality and patient safety](assets/readme/safety-quality-testing.png)
 
-*Every production build checks answer quality and enforces the clinical,
-privacy, and human-control boundaries the product must not cross.*
+*This visual reports the live production release gate: 149 curated records,
+400 patient-query cases, 226 provider-relationship cases, and 240
+patient-language cases. The public fixture is intentionally smaller. Production
+maintainers run the gate before review or deployment; Netlify's build command
+creates the public bundle but does not itself run the complete test suite.*
 
 The standard pre-submission check is:
 
