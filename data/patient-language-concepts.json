@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0.0",
+  "locale": "en-US",
+  "sourceCorpusSha256": "100f57b3da1f66ffe0bfd800260f3e6edcbca2d17f81a3ee1c21f6d0f85b1fb3",
+  "concepts": [
+    {
+      "conceptId": "eczema_demo",
+      "canonicalLabel": "Eczema information",
+      "kind": "condition",
+      "recordId": "condition:9001",
+      "sourceUrl": "https://revelusdermatology.com/conditions/eczema/",
+      "patientPhrases": [
+        "eczema",
+        "itchy patch on my elbow",
+        "recurring itchy patch"
+      ],
+      "commonMisspellings": [],
+      "strongSignals": [
+        "Eczema information"
+      ],
+      "weakSignals": [],
+      "negativeSignals": [],
+      "contrasts": [],
+      "ambiguityFlags": [],
+      "bookingRouteCandidate": "medical_focused",
+      "bookingConfidence": "validated",
+      "reviewStatus": "reviewed",
+      "notes": [
+        "Synthetic demonstration concept."
+      ]
+    },
+    {
+      "conceptId": "acne_demo",
+      "canonicalLabel": "Acne information",
+      "kind": "condition",
+      "recordId": "condition:9002",
+      "sourceUrl": "https://revelusdermatology.com/conditions/acne/",
+      "patientPhrases": [
+        "acne",
+        "adult acne",
+        "breakouts"
+      ],
+      "commonMisspellings": [],
+      "strongSignals": [
+        "Acne information"
+      ],
+      "weakSignals": [],
+      "negativeSignals": [],
+      "contrasts": [],
+      "ambiguityFlags": [],
+      "bookingRouteCandidate": "medical_acne",
+      "bookingConfidence": "validated",
+      "reviewStatus": "reviewed",
+      "notes": [
+        "Synthetic demonstration concept."
+      ]
+    },
+    {
+      "conceptId": "hair_loss_demo",
+      "canonicalLabel": "Hair loss information",
+      "kind": "condition",
+      "recordId": "condition:9003",
+      "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/",
+      "patientPhrases": [
+        "hair loss",
+        "hair is thinning",
+        "thinning hair"
+      ],
+      "commonMisspellings": [],
+      "strongSignals": [
+        "Hair loss information"
+      ],
+      "weakSignals": [],
+      "negativeSignals": [],
+      "contrasts": [],
+      "ambiguityFlags": [],
+      "bookingRouteCandidate": "medical_hair_loss",
+      "bookingConfidence": "validated",
+      "reviewStatus": "reviewed",
+      "notes": [
+        "Synthetic demonstration concept."
+      ]
+    },
+    {
+      "conceptId": "skin_cancer_screening_demo",
+      "canonicalLabel": "Skin cancer screening",
+      "kind": "medical_service",
+      "recordId": "medical_service:9004",
+      "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+      "patientPhrases": [
+        "skin cancer screening",
+        "skin check",
+        "full skin check"
+      ],
+      "commonMisspellings": [],
+      "strongSignals": [
+        "Skin cancer screening"
+      ],
+      "weakSignals": [],
+      "negativeSignals": [],
+      "contrasts": [],
+      "ambiguityFlags": [],
+      "bookingRouteCandidate": "skin_cancer_screening",
+      "bookingConfidence": "validated",
+      "reviewStatus": "reviewed",
+      "notes": [
+        "Synthetic demonstration concept."
+      ]
+    },
+    {
+      "conceptId": "botox_demo",
+      "canonicalLabel": "Botox information",
+      "kind": "cosmetic_service",
+      "recordId": "cosmetic_service:9005",
+      "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/",
+      "patientPhrases": [
+        "botox",
+        "natural looking botox",
+        "botox cost per unit"
+      ],
+      "commonMisspellings": [],
+      "strongSignals": [
+        "Botox information"
+      ],
+      "weakSignals": [],
+      "negativeSignals": [],
+      "contrasts": [],
+      "ambiguityFlags": [],
+      "bookingRouteCandidate": "treatment_neuromodulator",
+      "bookingConfidence": "validated",
+      "reviewStatus": "reviewed",
+      "notes": [
+        "Synthetic demonstration concept."
+      ]
+    },
+    {
+      "conceptId": "telemedicine_demo",
+      "canonicalLabel": "Virtual dermatology visits",
+      "kind": "medical_service",
+      "recordId": "medical_service:9006",
+      "sourceUrl": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+      "patientPhrases": [
+        "virtual visit",
+        "virtual visits",
+        "telemedicine"
+      ],
+      "commonMisspellings": [],
+      "strongSignals": [
+        "Virtual dermatology visits"
+      ],
+      "weakSignals": [],
+      "negativeSignals": [],
+      "contrasts": [],
+      "ambiguityFlags": [],
+      "bookingRouteCandidate": "virtual_focused",
+      "bookingConfidence": "validated",
+      "reviewStatus": "reviewed",
+      "notes": [
+        "Synthetic demonstration concept."
+      ]
+    }
+  ],
+  "ambiguities": []
+}

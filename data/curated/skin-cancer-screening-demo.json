@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.1.0",
+  "curationLevel": "full",
+  "indexable": true,
+  "pageId": "skin-cancer-screening-demo",
+  "pageType": "medical_service",
+  "title": "Skin cancer screening",
+  "summary": "A synthetic demonstration record describing full-body skin checks and screening questions.",
+  "seoDescription": "A synthetic demonstration record describing full-body skin checks and screening questions.",
+  "aliases": [
+    "skin cancer screening",
+    "skin check",
+    "full skin check"
+  ],
+  "source": {
+    "url": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+    "wordpressId": 9004,
+    "wordpressType": "medical_service",
+    "modifiedGmt": "2026-09-03T00:00:00.000Z",
+    "capturedAt": "2026-09-03T00:00:00.000Z",
+    "htmlSha256": "31ac18ec5d90d724d425faca4b3634001935f4080b3b75ed6196b7e7614073d7",
+    "restSha256": "31ac18ec5d90d724d425faca4b3634001935f4080b3b75ed6196b7e7614073d7",
+    "volatility": "stable"
+  },
+  "contentOutline": [
+    {
+      "level": 1,
+      "heading": "Skin cancer screening"
+    }
+  ],
+  "atAGlance": [],
+  "atAGlanceFootnotes": [],
+  "atAGlanceProvenance": [],
+  "facts": [],
+  "faqs": [
+    {
+      "faqId": "faq:demo:skin-cancer-screening-demo:001",
+      "question": "How do I book a skin check?",
+      "answer": "Use the screening visit path when you want a full-body skin check. A single concerning spot may require a different visit scope.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "Use the screening visit path when you want a full-body skin check. A single concerning spot may require a different visit scope.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    },
+    {
+      "faqId": "faq:demo:skin-cancer-screening-demo:002",
+      "question": "How often should I get checked for skin cancer?",
+      "answer": "Screening frequency depends on individual risk and professional guidance. Contact a qualified clinician for a personal recommendation.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "Screening frequency depends on individual risk and professional guidance. Contact a qualified clinician for a personal recommendation.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "actions": [],
+  "media": [],
+  "conflicts": [],
+  "answerSafety": {
+    "informationalOnly": true,
+    "mayDiagnose": false,
+    "mayPersonalizeTreatment": false,
+    "escalateWhen": [
+      "The request contains patient information or asks for personal medical advice."
+    ]
+  },
+  "review": {
+    "status": "synthetic_demo",
+    "reviewedAt": "2026-09-03T00:00:00.000Z",
+    "reviewNotes": [
+      "Manually authored for the ten-query public demonstration."
+    ]
+  }
+}

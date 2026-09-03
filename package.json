@@ -1,0 +1,15 @@
+{
+  "name": "revelus-webmcp-challenge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:public",
+    "build:public": "node scripts/build-public.mjs",
+    "build:sample": "node scripts/build-sample-data.mjs",
+    "test": "node --test",
+    "verify": "npm run build:sample && npm test && npm run build:public",
+    "serve": "node server.mjs"
+  },
+  "engines": {"node": ">=22"}
+}

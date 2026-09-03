@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.1.0",
+  "curationLevel": "full",
+  "indexable": true,
+  "pageId": "hair-loss-demo",
+  "pageType": "condition",
+  "title": "Hair loss information",
+  "summary": "A synthetic demonstration record for questions about thinning hair and hair-loss evaluations.",
+  "seoDescription": "A synthetic demonstration record for questions about thinning hair and hair-loss evaluations.",
+  "aliases": [
+    "hair loss",
+    "hair is thinning",
+    "thinning hair"
+  ],
+  "source": {
+    "url": "https://revelusdermatology.com/conditions/hair-loss/",
+    "wordpressId": 9003,
+    "wordpressType": "condition",
+    "modifiedGmt": "2026-09-03T00:00:00.000Z",
+    "capturedAt": "2026-09-03T00:00:00.000Z",
+    "htmlSha256": "2cf902e72a479e933e2ffbed72c720ca64b698d4238b547aea8233802ce4e999",
+    "restSha256": "2cf902e72a479e933e2ffbed72c720ca64b698d4238b547aea8233802ce4e999",
+    "volatility": "stable"
+  },
+  "contentOutline": [
+    {
+      "level": 1,
+      "heading": "Hair loss information"
+    }
+  ],
+  "atAGlance": [],
+  "atAGlanceFootnotes": [],
+  "atAGlanceProvenance": [],
+  "facts": [],
+  "faqs": [
+    {
+      "faqId": "faq:demo:hair-loss-demo:001",
+      "question": "Can I discuss thinning hair with a dermatology professional?",
+      "answer": "Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "actions": [],
+  "media": [],
+  "conflicts": [],
+  "answerSafety": {
+    "informationalOnly": true,
+    "mayDiagnose": false,
+    "mayPersonalizeTreatment": false,
+    "escalateWhen": [
+      "The request contains patient information or asks for personal medical advice."
+    ]
+  },
+  "review": {
+    "status": "synthetic_demo",
+    "reviewedAt": "2026-09-03T00:00:00.000Z",
+    "reviewNotes": [
+      "Manually authored for the ten-query public demonstration."
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "datasetVersion": "1.0.0-demo",
+  "lockedAt": "2026-09-03",
+  "note": "Exactly ten documented queries supported by the bundled synthetic demonstration corpus.",
+  "questions": [
+    {
+      "id": 1,
+      "section": "Synthetic demonstration",
+      "question": "I have an itchy patch on my elbow that keeps coming back.",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/conditions/eczema/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 2,
+      "section": "Synthetic demonstration",
+      "question": "I'm in my 30s and still get breakouts. What are my options?",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/conditions/acne/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 3,
+      "section": "Synthetic demonstration",
+      "question": "My hair is thinning and I'd like to talk to someone about it.",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/conditions/hair-loss/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 4,
+      "section": "Synthetic demonstration",
+      "question": "I've never had a skin check. How do I book one?",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/medical/skin-cancer-screening/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 5,
+      "section": "Synthetic demonstration",
+      "question": "How often should I get checked for skin cancer?",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/medical/skin-cancer-screening/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 6,
+      "section": "Synthetic demonstration",
+      "question": "I am curious about Botox but want to look natural.",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/cosmetic/botox/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 7,
+      "section": "Synthetic demonstration",
+      "question": "How much does Botox cost per unit?",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/cosmetic/botox/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 8,
+      "section": "Synthetic demonstration",
+      "question": "Do you offer virtual visits?",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/medical/telemedicine-appointment/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 9,
+      "section": "Synthetic demonstration",
+      "question": "What insurance do you accept?",
+      "expected": {
+        "mode": "results",
+        "target": "https://revelusdermatology.com/resources/insurance/"
+      },
+      "finalRouting": "Demonstration result only"
+    },
+    {
+      "id": 10,
+      "section": "Privacy boundary",
+      "question": "Can you look up my biopsy result?",
+      "expected": {
+        "mode": "refused",
+        "target": null
+      },
+      "finalRouting": "Refused: patient-record request"
+    }
+  ]
+}

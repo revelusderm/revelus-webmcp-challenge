@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ask about skin conditions, treatments, providers, costs, and appointment options using information published by Revelus Dermatology.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#3b3b3b">
+  <link rel="canonical" href="https://revelus.ai/">
+  <link rel="icon" href="/assets/revelus-favicon-150.jpg" sizes="32x32" type="image/jpeg">
+  <link rel="icon" href="/assets/revelus-favicon-300.jpg" sizes="192x192" type="image/jpeg">
+  <link rel="apple-touch-icon" href="/assets/revelus-favicon-300.jpg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="Ask Revelus">
+
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ask Revelus | Dermatology Answers &amp; Appointment Help">
+  <meta property="og:description" content="Ask about skin conditions, treatments, providers, costs, and appointment options using information published by Revelus Dermatology.">
+  <meta property="og:url" content="https://revelus.ai/">
+  <meta property="og:site_name" content="Revelus.ai">
+  <meta property="og:image" content="https://revelus.ai/assets/ask-revelus-social-1200x630.png">
+  <meta property="og:image:secure_url" content="https://revelus.ai/assets/ask-revelus-social-1200x630.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Ask Revelus with the Revelus Dermatology provider team">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@revelusderm">
+  <meta name="twitter:title" content="Ask Revelus | Dermatology Answers &amp; Appointment Help">
+  <meta name="twitter:description" content="Ask about skin conditions, treatments, providers, costs, and appointment options using information published by Revelus Dermatology.">
+  <meta name="twitter:image" content="https://revelus.ai/assets/ask-revelus-social-1200x630.png">
+  <meta name="twitter:image:alt" content="Ask Revelus with the Revelus Dermatology provider team">
+
+  <title>Ask Revelus | Dermatology Answers &amp; Appointment Help</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-ra-header>
+    <div class="header-inner">
+      <a class="site-logo" href="https://revelusdermatology.com" aria-label="Revelus Dermatology">
+        <img src="/assets/site-header-logo-white.png" alt="Revelus Dermatology">
+      </a>
+      <nav class="desktop-header-nav" aria-label="Revelus links">
+        <a href="https://revelusdermatology.com">Go to Revelus Dermatology <span aria-hidden="true">›</span></a>
+      </nav>
+      <a class="header-action chat-action" href="https://patient.klara.com/#/widget/signup/8824/verify">Chat <span aria-hidden="true">›</span></a>
+      <a class="header-action phone-action" href="tel:+15128152559"><span class="desktop-phone">(512) 815-2559</span><span class="mobile-phone">Call</span></a>
+      <a class="header-action schedule-action" href="https://revelusdermatology.com/schedule/">Schedule <span aria-hidden="true">›</span></a>
+    </div>
+  </header>
+
+  <nav class="page-nav" data-ra-pagenav aria-label="Page sections">
+    <div class="page-nav-inner">
+      <a class="page-nav-title" href="#ask">Ask Revelus</a>
+      <div class="page-nav-links">
+        <a id="results-nav-link" class="is-hidden" href="#results">results</a>
+        <a href="#faq">common questions</a>
+        <a href="#reviews">reviews</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section id="ask" class="section ask-section" aria-labelledby="ask-title">
+      <div class="section-inner ask-inner">
+        <h1 id="ask-title">how can we help your skin?</h1>
+        <p class="ask-intro">Ask about a condition, a treatment, a provider, or what a visit might cost. Every answer comes from a page we've published, and when there's a next step we'll show the right visit and available times.</p>
+
+        <form id="question-form" class="ask-form" novalidate>
+          <label class="sr-only" for="question-input">Ask a question</label>
+          <div class="ask-control">
+            <input id="question-input" name="question" type="text" minlength="2" maxlength="180" autocomplete="off" placeholder="How often should I get a skin cancer screening?" disabled>
+            <button id="ask-button" type="submit" disabled>Ask</button>
+          </div>
+          <p id="privacy-note" class="disclaimer">*Please leave out names, dates of birth and record numbers. For anything about your own care, use Chat on revelusdermatology.com.</p>
+        </form>
+
+        <div class="ask-disclosures">
+          <button id="question-pool-toggle" class="disclosure-button" type="button" aria-expanded="false" aria-controls="question-pool" disabled><span class="disclosure-arrow" aria-hidden="true">›</span> try a common question</button>
+          <div id="question-pool" class="question-pool is-hidden">
+            <div class="question-pool-row">
+              <p>browse by topic:</p>
+              <div id="topic-chips" class="chip-row"></div>
+            </div>
+            <div class="question-pool-row">
+              <p>see what happens when:</p>
+              <div id="gate-chips" class="chip-row"></div>
+            </div>
+          </div>
+
+          <details id="webmcp-response-inspector" class="webmcp-inspector">
+            <summary>WebMCP response inspector</summary>
+            <div class="inspector-body">
+              <p>Four site tools are registered on <code>document.modelContext</code>. AI assistants and the controls on this page use the same handlers and update this same interface.</p>
+              <div class="tool-table" role="table" aria-label="Registered WebMCP tools">
+                <div class="tool-row tool-head" role="row"><span role="columnheader">tool</span><span role="columnheader">what it does</span><span role="columnheader">access</span></div>
+                <div class="tool-row" role="row"><code role="cell">revelus.search_information</code><span role="cell">Searches ranked published pages</span><span role="cell">read-only</span></div>
+                <div class="tool-row" role="row"><code role="cell">revelus.get_answer</code><span role="cell">Returns the published page card and matched answer</span><span role="cell">read-only</span></div>
+                <div class="tool-row" role="row"><code role="cell">revelus.resolve_visit_path</code><span role="cell">Builds a validated appointment path</span><span role="cell">updates plan</span></div>
+                <div class="tool-row" role="row"><code role="cell">revelus.get_availability</code><span role="cell">Reads current NextPatient times</span><span role="cell">read-only</span></div>
+              </div>
+              <div class="inspector-latest">
+                <div><span>latest tool</span><strong id="webmcp-response-tool">No response yet</strong></div>
+                <div><span>source</span><strong id="webmcp-response-source">Waiting</strong></div>
+              </div>
+              <pre id="webmcp-response-output">No WebMCP response yet.</pre>
+              <div id="tool-call-log" class="tool-call-log" aria-label="Tool call history"></div>
+            </div>
+          </details>
+        </div>
+        <p id="connection-status" class="connection-status" role="status">Starting WebMCP…</p>
+      </div>
+    </section>
+
+    <section id="results" class="section results-section is-hidden" aria-labelledby="results-title">
+      <div class="section-inner">
+        <div id="result-gate" class="result-gate is-hidden"></div>
+        <div class="results-heading">
+          <h2 id="results-title" tabindex="-1">published Revelus pages</h2>
+          <button id="ask-again-button" class="text-button" type="button">Ask Something Else</button>
+        </div>
+        <div id="results-list" class="results-list"></div>
+        <div class="view-more-wrap"><button id="view-more-button" class="outline-button is-hidden" type="button">View More</button></div>
+      </div>
+    </section>
+
+    <section id="faq" class="section faq-section" aria-labelledby="faq-title">
+      <div class="section-inner faq-layout">
+        <div class="faq-heading"><h2 id="faq-title">common questions</h2><span aria-hidden="true">FAQ</span></div>
+        <div id="faq-list" class="faq-list">
+          <div class="faq-item"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-panel-1">what is this page</button><div id="faq-panel-1" class="faq-panel" hidden><p>Built by Revelus Dermatology to show how a practice's website can answer questions and route appointments in plain language, for people and for the assistants people use.</p></div></div>
+          <div class="faq-item"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-panel-2">where do the answers come from</button><div id="faq-panel-2" class="faq-panel" hidden><p>Only from pages published on revelusdermatology.com, each linked. Nothing here is a diagnosis or a recommendation for you specifically.</p></div></div>
+          <div class="faq-item"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-panel-3">can i book an appointment here</button><div id="faq-panel-3" class="faq-panel" hidden><p>You choose a provider and time here, then finish on NextPatient, our secure scheduling partner. Nothing is held until you complete it there.</p></div></div>
+          <div class="faq-item"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-panel-4">i'm a patient and need to reach the office</button><div id="faq-panel-4" class="faq-panel" hidden><p>Chat with us at revelusdermatology.com, call <a href="tel:+15128152559">(512) 815-2559</a>, or visit 4401 West Gate Blvd, Ste 120, Austin TX 78745. Existing patients use the patient portal for records and results.</p></div></div>
+          <div class="faq-item faq-extra is-hidden"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-panel-5">what should i leave out of a question</button><div id="faq-panel-5" class="faq-panel" hidden><p>Names, dates of birth, record or claim numbers, and your medical history. If a question includes them we stop and point you to secure chat instead of answering.</p></div></div>
+          <div class="faq-item faq-extra is-hidden"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-panel-6">can an ai assistant use this page for me</button><div id="faq-panel-6" class="faq-panel" hidden><p>Yes. An assistant sees the same published answers and provider times you do. Only you can complete a booking, and no assistant can read or hold your records.</p></div></div>
+        </div>
+        <button id="faq-more-button" class="outline-button" type="button">View More</button>
+      </div>
+    </section>
+
+    <section class="statement-section" aria-labelledby="statement-title">
+      <div class="section-inner statement-inner">
+        <h2 id="statement-title">for the full patient experience, visit revelus dermatology.</h2>
+        <a class="outline-button" href="https://revelusdermatology.com">Go to Revelus Dermatology</a>
+      </div>
+    </section>
+
+    <section id="reviews" class="section reviews-section" aria-labelledby="reviews-title">
+      <div class="section-inner">
+        <h2 id="reviews-title">our reviews</h2>
+        <div class="review-grid">
+          <figure><blockquote>“I recently visited Revelus Dermatology and loved the care and professionalism I experienced. Dr. Richardson went above and beyond to thoroughly explain the procedure and expectations.”</blockquote><figcaption>Candi · Google review</figcaption></figure>
+          <figure><blockquote>“Dr. Patel was prompt, professional, nice and dealt with my concerns informatively in a kind and respectful manner. The office personnel were great!”</blockquote><figcaption>Suzanne · Google review</figcaption></figure>
+          <figure><blockquote>“Peije was excellent as usual. She was also very patient answering all my questions about other services.”</blockquote><figcaption>Paula · Google review</figcaption></figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="/assets/revelus-icon-white.png" alt="">
+      <div><strong>Revelus Dermatology</strong><span>4401 West Gate Blvd, Ste 120, Austin, TX 78745</span></div>
+      <div><a href="tel:+15128152559">(512) 815-2559</a><a href="https://revelusdermatology.com/contact-us/">Contact Us</a></div>
+      <p>Published information only. This experience does not diagnose, access records, reserve appointments, or replace medical care.</p>
+    </div>
+  </footer>
+
+  <div id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="/src/app.mjs"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.1.0",
+  "curationLevel": "full",
+  "indexable": true,
+  "pageId": "telemedicine-demo",
+  "pageType": "medical_service",
+  "title": "Virtual dermatology visits",
+  "summary": "A synthetic demonstration record indicating that some concerns may begin with a virtual visit.",
+  "seoDescription": "A synthetic demonstration record indicating that some concerns may begin with a virtual visit.",
+  "aliases": [
+    "virtual visit",
+    "virtual visits",
+    "telemedicine"
+  ],
+  "source": {
+    "url": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+    "wordpressId": 9006,
+    "wordpressType": "medical_service",
+    "modifiedGmt": "2026-09-03T00:00:00.000Z",
+    "capturedAt": "2026-09-03T00:00:00.000Z",
+    "htmlSha256": "14a40aea8f78ebac08944efc86b5e9acedba3721ed3879252ea10386fb10b934",
+    "restSha256": "14a40aea8f78ebac08944efc86b5e9acedba3721ed3879252ea10386fb10b934",
+    "volatility": "stable"
+  },
+  "contentOutline": [
+    {
+      "level": 1,
+      "heading": "Virtual dermatology visits"
+    }
+  ],
+  "atAGlance": [],
+  "atAGlanceFootnotes": [],
+  "atAGlanceProvenance": [],
+  "facts": [],
+  "faqs": [
+    {
+      "faqId": "faq:demo:telemedicine-demo:001",
+      "question": "Do you offer virtual visits?",
+      "answer": "Some concerns may be appropriate for a virtual visit. Confirm eligibility and current availability before scheduling.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "Some concerns may be appropriate for a virtual visit. Confirm eligibility and current availability before scheduling.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "actions": [],
+  "media": [],
+  "conflicts": [],
+  "answerSafety": {
+    "informationalOnly": true,
+    "mayDiagnose": false,
+    "mayPersonalizeTreatment": false,
+    "escalateWhen": [
+      "The request contains patient information or asks for personal medical advice."
+    ]
+  },
+  "review": {
+    "status": "synthetic_demo",
+    "reviewedAt": "2026-09-03T00:00:00.000Z",
+    "reviewNotes": [
+      "Manually authored for the ten-query public demonstration."
+    ]
+  }
+}

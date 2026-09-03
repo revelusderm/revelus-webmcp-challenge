@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://revelusdermatology.com/schemas/curated-record.schema.json",
+  "title": "Revelus curated page record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "curationLevel", "indexable", "pageId", "pageType", "title", "summary",
+    "seoDescription", "source", "contentOutline", "atAGlance", "atAGlanceFootnotes",
+    "atAGlanceProvenance", "facts", "faqs", "relationships",
+    "actions", "media", "conflicts", "answerSafety", "review"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.1.0" },
+    "curationLevel": { "enum": ["full", "light"] },
+    "indexable": { "type": "boolean" },
+    "pageId": { "type": "string", "minLength": 1 },
+    "pageType": {
+      "enum": ["condition", "cosmetic_service", "medical_service", "provider", "resource", "page", "homepage", "offer_collection"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "seoDescription": { "type": ["string", "null"] },
+    "aliases": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "source": { "$ref": "#/$defs/source" },
+    "contentOutline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["level", "heading"],
+        "properties": {
+          "level": { "type": "integer", "minimum": 1, "maximum": 6 },
+          "heading": { "type": "string" }
+        }
+      }
+    },
+    "atAGlance": { "type": "array", "items": { "$ref": "#/$defs/atAGlanceItem" } },
+    "atAGlanceFootnotes": { "type": "array", "items": { "$ref": "#/$defs/atAGlanceFootnote" } },
+    "atAGlanceProvenance": { "type": "array", "items": { "$ref": "#/$defs/provenance" } },
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/fact" } },
+    "faqs": { "type": "array", "items": { "$ref": "#/$defs/faq" } },
+    "relationships": { "type": "array", "items": { "$ref": "#/$defs/relationship" } },
+    "actions": { "type": "array", "items": { "$ref": "#/$defs/action" } },
+    "media": { "type": "array", "items": { "$ref": "#/$defs/media" } },
+    "conflicts": { "type": "array", "items": { "$ref": "#/$defs/conflict" } },
+    "offers": { "type": "array", "items": { "type": "object" } },
+    "bookableFor": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "visitOptions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/visitOption" }
+    },
+    "providerProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "credential", "role"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "credential": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "answerSafety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["informationalOnly", "mayDiagnose", "mayPersonalizeTreatment", "escalateWhen"],
+      "properties": {
+        "informationalOnly": { "type": "boolean" },
+        "mayDiagnose": { "type": "boolean" },
+        "mayPersonalizeTreatment": { "type": "boolean" },
+        "escalateWhen": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewedAt", "reviewNotes"],
+      "properties": {
+        "status": { "type": "string" },
+        "reviewedAt": { "type": ["string", "null"] },
+        "reviewNotes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "wordpressId", "wordpressType", "modifiedGmt", "capturedAt", "htmlSha256", "restSha256", "volatility"],
+      "properties": {
+        "url": { "type": "string", "pattern": "^https://revelusdermatology\\.com/" },
+        "wordpressId": { "type": "integer" },
+        "wordpressType": { "type": "string" },
+        "modifiedGmt": { "type": "string" },
+        "capturedAt": { "type": "string" },
+        "htmlSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "restSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "volatility": { "enum": ["stable", "moderate", "time_sensitive"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceUrl", "sourceKind", "sourceExcerpt", "capturedAt"],
+      "properties": {
+        "sourceUrl": { "type": "string", "pattern": "^https://" },
+        "sourceKind": { "type": "string", "minLength": 1 },
+        "sourceExcerpt": { "type": "string", "minLength": 1 },
+        "capturedAt": { "type": "string" },
+        "section": { "type": ["string", "null"] }
+      }
+    },
+    "atAGlanceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "value", "meter", "footnoteRef"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 1 },
+        "meter": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["value", "scale"],
+          "properties": {
+            "value": { "type": "integer", "minimum": 0 },
+            "scale": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "footnoteRef": { "type": ["string", "null"] }
+      }
+    },
+    "atAGlanceFootnote": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "text"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factId", "category", "label", "value", "qualifiers", "volatility", "clinicalSensitivity", "provenance"],
+      "properties": {
+        "factId": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "value": { "type": ["string", "number", "array"] },
+        "qualifiers": { "type": "array", "items": { "type": "string" } },
+        "volatility": { "enum": ["stable", "moderate", "time_sensitive"] },
+        "clinicalSensitivity": { "enum": ["educational", "clinical_caution", "administrative"] },
+        "provenance": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/provenance" } }
+      }
+    },
+    "faq": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["faqId", "question", "answer", "answerMode", "supportingFactIds", "relatedActionIds", "provenance"],
+      "properties": {
+        "faqId": { "type": "string" },
+        "question": { "type": "string", "minLength": 1 },
+        "answer": { "type": "string", "minLength": 1 },
+        "answerMode": { "const": "canonical_quote" },
+        "supportingFactIds": { "type": "array", "items": { "type": "string" } },
+        "relatedActionIds": { "type": "array", "items": { "type": "string" } },
+        "provenance": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/provenance" } }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationshipId", "predicate", "relationshipKind", "targetPageId", "targetUrl", "targetType", "evidenceGrade", "reviewStatus", "provenance"],
+      "properties": {
+        "relationshipId": { "type": "string" },
+        "predicate": { "type": "string" },
+        "relationshipKind": {
+          "enum": ["treatment_for", "provider_addressing", "provider_offering", "related_condition", "condition_addressed", "related_service", "book_with", "other"]
+        },
+        "targetPageId": { "type": ["string", "null"] },
+        "targetUrl": { "type": "string", "pattern": "^https://" },
+        "targetType": { "type": "string" },
+        "evidenceGrade": { "type": "string" },
+        "reviewStatus": { "enum": ["verified", "inferred"] },
+        "provenance": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/provenance" } }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actionId", "kind", "label", "url", "status", "bookingRouteKey", "humanConfirmationRequired", "phiBoundary", "provenance"],
+      "properties": {
+        "actionId": { "type": "string" },
+        "kind": { "type": "string" },
+        "label": { "type": "string" },
+        "url": { "type": "string" },
+        "status": { "type": "string" },
+        "bookingRouteKey": { "type": ["string", "null"] },
+        "bookingRouteReason": { "type": ["string", "null"] },
+        "humanConfirmationRequired": { "type": "boolean" },
+        "phiBoundary": { "type": "string" },
+        "provenance": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/provenance" } }
+      }
+    },
+    "visitOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bookingRouteKey", "label", "reasonId", "appointmentType", "visitReason", "location", "mode", "sourceUrl"],
+      "properties": {
+        "bookingRouteKey": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "reasonId": { "type": "string", "pattern": "^[0-9]+$" },
+        "appointmentType": { "type": "string", "minLength": 1 },
+        "visitReason": { "type": "string", "minLength": 1 },
+        "location": { "enum": ["in-office", "virtual"] },
+        "mode": { "enum": ["online", "call", "mixed"] },
+        "sourceUrl": { "type": "string", "pattern": "^https://nextpatient\\.co/" }
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mediaId", "kind", "url", "alt", "sourceKind"],
+      "properties": {
+        "mediaId": { "type": "string" },
+        "kind": { "enum": ["hero", "provider_portrait"] },
+        "url": { "type": "string", "pattern": "^https://" },
+        "alt": { "type": "string" },
+        "sourceKind": { "type": "string" }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflictId", "topic", "status", "claimRefs", "preferredClaimRef", "resolutionRule"],
+      "properties": {
+        "conflictId": { "type": "string" },
+        "topic": { "type": "string" },
+        "status": { "type": "string" },
+        "claimRefs": { "type": "array", "items": { "type": "string" } },
+        "preferredClaimRef": { "type": ["string", "null"] },
+        "resolutionRule": { "type": "string" }
+      }
+    }
+  }
+}

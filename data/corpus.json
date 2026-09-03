@@ -1,0 +1,266 @@
+{
+  "schemaVersion": "1.0.0-demo",
+  "generatedAt": "2026-09-03T00:00:00.000Z",
+  "manifestSha256": "66d00de3218ce57f7dd1717918f25f47ca040d202eb7a3eefbde78b53b1e1b78",
+  "records": [
+    {
+      "recordId": "condition:9001",
+      "kind": "condition",
+      "sourceUri": "https://revelusdermatology.com/conditions/eczema/",
+      "restId": 9001,
+      "wordpressTitle": "Eczema information",
+      "documentTitle": "Eczema information",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "eczema-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record explaining that recurring itchy patches can be discussed with a dermatology professional.",
+      "canonicalUrl": "https://revelusdermatology.com/conditions/eczema/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Eczema information"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:eczema-demo:001",
+          "question": "Can a dermatologist evaluate a recurring itchy patch?",
+          "answer": "Yes. A dermatology visit can evaluate a recurring itchy patch. This demonstration does not diagnose the cause.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/conditions/eczema/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "07893fc35c8f158674466e1984f9b6a4b1cb75794e0d428e67b4d24c65908c8b",
+      "semanticSha256": "07893fc35c8f158674466e1984f9b6a4b1cb75794e0d428e67b4d24c65908c8b",
+      "httpStatus": 200
+    },
+    {
+      "recordId": "condition:9002",
+      "kind": "condition",
+      "sourceUri": "https://revelusdermatology.com/conditions/acne/",
+      "restId": 9002,
+      "wordpressTitle": "Acne information",
+      "documentTitle": "Acne information",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "acne-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record covering adult acne, breakouts, and the role of an acne evaluation.",
+      "canonicalUrl": "https://revelusdermatology.com/conditions/acne/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Acne information"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:acne-demo:001",
+          "question": "Can adults be evaluated for acne?",
+          "answer": "Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/conditions/acne/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "9057153b072f026ea505f501455b639e70f9b19013d8e93626645ec10c01199b",
+      "semanticSha256": "9057153b072f026ea505f501455b639e70f9b19013d8e93626645ec10c01199b",
+      "httpStatus": 200
+    },
+    {
+      "recordId": "condition:9003",
+      "kind": "condition",
+      "sourceUri": "https://revelusdermatology.com/conditions/hair-loss/",
+      "restId": 9003,
+      "wordpressTitle": "Hair loss information",
+      "documentTitle": "Hair loss information",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "hair-loss-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record for questions about thinning hair and hair-loss evaluations.",
+      "canonicalUrl": "https://revelusdermatology.com/conditions/hair-loss/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Hair loss information"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:hair-loss-demo:001",
+          "question": "Can I discuss thinning hair with a dermatology professional?",
+          "answer": "Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "b769724d947db51ec8926d15536bb117f28462cc90d0d2dd87605f6df2e5744a",
+      "semanticSha256": "b769724d947db51ec8926d15536bb117f28462cc90d0d2dd87605f6df2e5744a",
+      "httpStatus": 200
+    },
+    {
+      "recordId": "medical_service:9004",
+      "kind": "medical_service",
+      "sourceUri": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+      "restId": 9004,
+      "wordpressTitle": "Skin cancer screening",
+      "documentTitle": "Skin cancer screening",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "skin-cancer-screening-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record describing full-body skin checks and screening questions.",
+      "canonicalUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Skin cancer screening"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:skin-cancer-screening-demo:001",
+          "question": "How do I book a skin check?",
+          "answer": "Use the screening visit path when you want a full-body skin check. A single concerning spot may require a different visit scope.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/"
+        },
+        {
+          "faqId": "faq:demo:skin-cancer-screening-demo:002",
+          "question": "How often should I get checked for skin cancer?",
+          "answer": "Screening frequency depends on individual risk and professional guidance. Contact a qualified clinician for a personal recommendation.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "fda95a476e7a36e674bb4e4651fbed57a05e5443058749d1c85ac71eaefd4385",
+      "semanticSha256": "fda95a476e7a36e674bb4e4651fbed57a05e5443058749d1c85ac71eaefd4385",
+      "httpStatus": 200
+    },
+    {
+      "recordId": "cosmetic_service:9005",
+      "kind": "cosmetic_service",
+      "sourceUri": "https://revelusdermatology.com/cosmetic/botox/",
+      "restId": 9005,
+      "wordpressTitle": "Botox information",
+      "documentTitle": "Botox information",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "botox-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record for general Botox goals and pricing questions.",
+      "canonicalUrl": "https://revelusdermatology.com/cosmetic/botox/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Botox information"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:botox-demo:001",
+          "question": "Can Botox results be planned to look natural?",
+          "answer": "A cosmetic professional can discuss conservative goals and expected results. Individual treatment advice requires a consultation.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/"
+        },
+        {
+          "faqId": "faq:demo:botox-demo:002",
+          "question": "How much does Botox cost per unit?",
+          "answer": "Pricing can change and is intentionally omitted from this synthetic dataset. Verify current pricing directly with the practice.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "4948d2dc2f259fdb354ab74e4fa4be0585ec9dda77b6a066d60781a8e2dd9750",
+      "semanticSha256": "4948d2dc2f259fdb354ab74e4fa4be0585ec9dda77b6a066d60781a8e2dd9750",
+      "httpStatus": 200
+    },
+    {
+      "recordId": "medical_service:9006",
+      "kind": "medical_service",
+      "sourceUri": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+      "restId": 9006,
+      "wordpressTitle": "Virtual dermatology visits",
+      "documentTitle": "Virtual dermatology visits",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "telemedicine-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record indicating that some concerns may begin with a virtual visit.",
+      "canonicalUrl": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Virtual dermatology visits"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:telemedicine-demo:001",
+          "question": "Do you offer virtual visits?",
+          "answer": "Some concerns may be appropriate for a virtual visit. Confirm eligibility and current availability before scheduling.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/medical/telemedicine-appointment/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "af065023af0f72fef148f9c287e35860d3b01fc91c28a506ebb8cc9295ed2c6a",
+      "semanticSha256": "af065023af0f72fef148f9c287e35860d3b01fc91c28a506ebb8cc9295ed2c6a",
+      "httpStatus": 200
+    },
+    {
+      "recordId": "page:9007",
+      "kind": "page",
+      "sourceUri": "https://revelusdermatology.com/resources/insurance/",
+      "restId": 9007,
+      "wordpressTitle": "Insurance information",
+      "documentTitle": "Insurance information",
+      "documentTitleSource": "synthetic_demo",
+      "slug": "insurance-demo",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z",
+      "capturedAt": "2026-09-03T00:00:00.000Z",
+      "description": "A synthetic demonstration record directing users to verify current insurance participation.",
+      "canonicalUrl": "https://revelusdermatology.com/resources/insurance/",
+      "primaryImage": null,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Insurance information"
+        }
+      ],
+      "faqs": [
+        {
+          "faqId": "faq:demo:insurance-demo:001",
+          "question": "What insurance do you accept?",
+          "answer": "Plan participation changes. Verify current acceptance with the practice and your insurer before receiving care.",
+          "sourceKind": "synthetic_demo",
+          "sourceUrl": "https://revelusdermatology.com/resources/insurance/"
+        }
+      ],
+      "relationships": [],
+      "redirectTarget": null,
+      "responseSha256": "c98d2bc3791bdfce9668f2f0fe4a58b2a8301696ab3244075f937b132daa9325",
+      "semanticSha256": "c98d2bc3791bdfce9668f2f0fe4a58b2a8301696ab3244075f937b132daa9325",
+      "httpStatus": 200
+    }
+  ]
+}

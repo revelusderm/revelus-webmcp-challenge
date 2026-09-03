@@ -1,0 +1,22 @@
+{
+  "name": "Ask Revelus",
+  "short_name": "Ask Revelus",
+  "description": "Ask about skin conditions, treatments, providers, costs, and appointment options using information published by Revelus Dermatology.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#3b3b3b",
+  "icons": [
+    {
+      "src": "/assets/revelus-favicon-150.jpg",
+      "sizes": "150x150",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/assets/revelus-favicon-300.jpg",
+      "sizes": "300x300",
+      "type": "image/jpeg"
+    }
+  ]
+}

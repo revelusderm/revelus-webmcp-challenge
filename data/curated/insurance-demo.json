@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.1.0",
+  "curationLevel": "full",
+  "indexable": true,
+  "pageId": "insurance-demo",
+  "pageType": "resource",
+  "title": "Insurance information",
+  "summary": "A synthetic demonstration record directing users to verify current insurance participation.",
+  "seoDescription": "A synthetic demonstration record directing users to verify current insurance participation.",
+  "aliases": [
+    "insurance",
+    "accepted insurance"
+  ],
+  "source": {
+    "url": "https://revelusdermatology.com/resources/insurance/",
+    "wordpressId": 9007,
+    "wordpressType": "page",
+    "modifiedGmt": "2026-09-03T00:00:00.000Z",
+    "capturedAt": "2026-09-03T00:00:00.000Z",
+    "htmlSha256": "19c7f4cb4d3401a6ddc314be3e4aeffeb2d04ea8ca072f14804c9605db8e0322",
+    "restSha256": "19c7f4cb4d3401a6ddc314be3e4aeffeb2d04ea8ca072f14804c9605db8e0322",
+    "volatility": "stable"
+  },
+  "contentOutline": [
+    {
+      "level": 1,
+      "heading": "Insurance information"
+    }
+  ],
+  "atAGlance": [],
+  "atAGlanceFootnotes": [],
+  "atAGlanceProvenance": [],
+  "facts": [],
+  "faqs": [
+    {
+      "faqId": "faq:demo:insurance-demo:001",
+      "question": "What insurance do you accept?",
+      "answer": "Plan participation changes. Verify current acceptance with the practice and your insurer before receiving care.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/resources/insurance/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "Plan participation changes. Verify current acceptance with the practice and your insurer before receiving care.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "actions": [],
+  "media": [],
+  "conflicts": [],
+  "answerSafety": {
+    "informationalOnly": true,
+    "mayDiagnose": false,
+    "mayPersonalizeTreatment": false,
+    "escalateWhen": [
+      "The request contains patient information or asks for personal medical advice."
+    ]
+  },
+  "review": {
+    "status": "synthetic_demo",
+    "reviewedAt": "2026-09-03T00:00:00.000Z",
+    "reviewNotes": [
+      "Manually authored for the ten-query public demonstration."
+    ]
+  }
+}

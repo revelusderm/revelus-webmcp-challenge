@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0.0-demo",
+  "generatedAt": "2026-09-03T00:00:00.000Z",
+  "corpusSha256": "100f57b3da1f66ffe0bfd800260f3e6edcbca2d17f81a3ee1c21f6d0f85b1fb3",
+  "entries": [
+    {
+      "entryId": "page:condition:9001",
+      "kind": "page",
+      "pageId": "condition:9001",
+      "title": "Eczema information",
+      "text": "Eczema information A synthetic demonstration record explaining that recurring itchy patches can be discussed with a dermatology professional. eczema itchy patch on my elbow recurring itchy patch Can a dermatologist evaluate a recurring itchy patch? Yes. A dermatology visit can evaluate a recurring itchy patch. This demonstration does not diagnose the cause.",
+      "sourceUrl": "https://revelusdermatology.com/conditions/eczema/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:eczema-demo:001",
+      "kind": "faq",
+      "pageId": "condition:9001",
+      "title": "Can a dermatologist evaluate a recurring itchy patch?",
+      "text": "Eczema information Can a dermatologist evaluate a recurring itchy patch? Yes. A dermatology visit can evaluate a recurring itchy patch. This demonstration does not diagnose the cause. eczema itchy patch on my elbow recurring itchy patch",
+      "sourceUrl": "https://revelusdermatology.com/conditions/eczema/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "page:condition:9002",
+      "kind": "page",
+      "pageId": "condition:9002",
+      "title": "Acne information",
+      "text": "Acne information A synthetic demonstration record covering adult acne, breakouts, and the role of an acne evaluation. acne adult acne breakouts Can adults be evaluated for acne? Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.",
+      "sourceUrl": "https://revelusdermatology.com/conditions/acne/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:acne-demo:001",
+      "kind": "faq",
+      "pageId": "condition:9002",
+      "title": "Can adults be evaluated for acne?",
+      "text": "Acne information Can adults be evaluated for acne? Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options. acne adult acne breakouts",
+      "sourceUrl": "https://revelusdermatology.com/conditions/acne/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "page:condition:9003",
+      "kind": "page",
+      "pageId": "condition:9003",
+      "title": "Hair loss information",
+      "text": "Hair loss information A synthetic demonstration record for questions about thinning hair and hair-loss evaluations. hair loss hair is thinning thinning hair Can I discuss thinning hair with a dermatology professional? Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
+      "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:hair-loss-demo:001",
+      "kind": "faq",
+      "pageId": "condition:9003",
+      "title": "Can I discuss thinning hair with a dermatology professional?",
+      "text": "Hair loss information Can I discuss thinning hair with a dermatology professional? Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description. hair loss hair is thinning thinning hair",
+      "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "page:medical_service:9004",
+      "kind": "page",
+      "pageId": "medical_service:9004",
+      "title": "Skin cancer screening",
+      "text": "Skin cancer screening A synthetic demonstration record describing full-body skin checks and screening questions. skin cancer screening skin check full skin check How do I book a skin check? Use the screening visit path when you want a full-body skin check. A single concerning spot may require a different visit scope. How often should I get checked for skin cancer? Screening frequency depends on individual risk and professional guidance. Contact a qualified clinician for a personal recommendation.",
+      "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:skin-cancer-screening-demo:001",
+      "kind": "faq",
+      "pageId": "medical_service:9004",
+      "title": "How do I book a skin check?",
+      "text": "Skin cancer screening How do I book a skin check? Use the screening visit path when you want a full-body skin check. A single concerning spot may require a different visit scope. skin cancer screening skin check full skin check",
+      "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:skin-cancer-screening-demo:002",
+      "kind": "faq",
+      "pageId": "medical_service:9004",
+      "title": "How often should I get checked for skin cancer?",
+      "text": "Skin cancer screening How often should I get checked for skin cancer? Screening frequency depends on individual risk and professional guidance. Contact a qualified clinician for a personal recommendation. skin cancer screening skin check full skin check",
+      "sourceUrl": "https://revelusdermatology.com/medical/skin-cancer-screening/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "page:cosmetic_service:9005",
+      "kind": "page",
+      "pageId": "cosmetic_service:9005",
+      "title": "Botox information",
+      "text": "Botox information A synthetic demonstration record for general Botox goals and pricing questions. botox natural looking botox botox cost per unit Can Botox results be planned to look natural? A cosmetic professional can discuss conservative goals and expected results. Individual treatment advice requires a consultation. How much does Botox cost per unit? Pricing can change and is intentionally omitted from this synthetic dataset. Verify current pricing directly with the practice.",
+      "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:botox-demo:001",
+      "kind": "faq",
+      "pageId": "cosmetic_service:9005",
+      "title": "Can Botox results be planned to look natural?",
+      "text": "Botox information Can Botox results be planned to look natural? A cosmetic professional can discuss conservative goals and expected results. Individual treatment advice requires a consultation. botox natural looking botox botox cost per unit",
+      "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:botox-demo:002",
+      "kind": "faq",
+      "pageId": "cosmetic_service:9005",
+      "title": "How much does Botox cost per unit?",
+      "text": "Botox information How much does Botox cost per unit? Pricing can change and is intentionally omitted from this synthetic dataset. Verify current pricing directly with the practice. botox natural looking botox botox cost per unit",
+      "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "page:medical_service:9006",
+      "kind": "page",
+      "pageId": "medical_service:9006",
+      "title": "Virtual dermatology visits",
+      "text": "Virtual dermatology visits A synthetic demonstration record indicating that some concerns may begin with a virtual visit. virtual visit virtual visits telemedicine Do you offer virtual visits? Some concerns may be appropriate for a virtual visit. Confirm eligibility and current availability before scheduling.",
+      "sourceUrl": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:telemedicine-demo:001",
+      "kind": "faq",
+      "pageId": "medical_service:9006",
+      "title": "Do you offer virtual visits?",
+      "text": "Virtual dermatology visits Do you offer virtual visits? Some concerns may be appropriate for a virtual visit. Confirm eligibility and current availability before scheduling. virtual visit virtual visits telemedicine",
+      "sourceUrl": "https://revelusdermatology.com/medical/telemedicine-appointment/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "page:page:9007",
+      "kind": "page",
+      "pageId": "page:9007",
+      "title": "Insurance information",
+      "text": "Insurance information A synthetic demonstration record directing users to verify current insurance participation. insurance accepted insurance What insurance do you accept? Plan participation changes. Verify current acceptance with the practice and your insurer before receiving care.",
+      "sourceUrl": "https://revelusdermatology.com/resources/insurance/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    },
+    {
+      "entryId": "faq:demo:insurance-demo:001",
+      "kind": "faq",
+      "pageId": "page:9007",
+      "title": "What insurance do you accept?",
+      "text": "Insurance information What insurance do you accept? Plan participation changes. Verify current acceptance with the practice and your insurer before receiving care. insurance accepted insurance",
+      "sourceUrl": "https://revelusdermatology.com/resources/insurance/",
+      "modifiedGmt": "2026-09-03T00:00:00.000Z"
+    }
+  ]
+}

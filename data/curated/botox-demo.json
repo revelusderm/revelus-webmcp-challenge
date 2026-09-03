@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.1.0",
+  "curationLevel": "full",
+  "indexable": true,
+  "pageId": "botox-demo",
+  "pageType": "cosmetic_service",
+  "title": "Botox information",
+  "summary": "A synthetic demonstration record for general Botox goals and pricing questions.",
+  "seoDescription": "A synthetic demonstration record for general Botox goals and pricing questions.",
+  "aliases": [
+    "botox",
+    "natural looking botox",
+    "botox cost per unit"
+  ],
+  "source": {
+    "url": "https://revelusdermatology.com/cosmetic/botox/",
+    "wordpressId": 9005,
+    "wordpressType": "cosmetic_service",
+    "modifiedGmt": "2026-09-03T00:00:00.000Z",
+    "capturedAt": "2026-09-03T00:00:00.000Z",
+    "htmlSha256": "b62d9cac803e50886f44b29304db23aaf3e40798744293a571bf4a1a4616ad05",
+    "restSha256": "b62d9cac803e50886f44b29304db23aaf3e40798744293a571bf4a1a4616ad05",
+    "volatility": "stable"
+  },
+  "contentOutline": [
+    {
+      "level": 1,
+      "heading": "Botox information"
+    }
+  ],
+  "atAGlance": [],
+  "atAGlanceFootnotes": [],
+  "atAGlanceProvenance": [],
+  "facts": [],
+  "faqs": [
+    {
+      "faqId": "faq:demo:botox-demo:001",
+      "question": "Can Botox results be planned to look natural?",
+      "answer": "A cosmetic professional can discuss conservative goals and expected results. Individual treatment advice requires a consultation.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "A cosmetic professional can discuss conservative goals and expected results. Individual treatment advice requires a consultation.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    },
+    {
+      "faqId": "faq:demo:botox-demo:002",
+      "question": "How much does Botox cost per unit?",
+      "answer": "Pricing can change and is intentionally omitted from this synthetic dataset. Verify current pricing directly with the practice.",
+      "answerMode": "canonical_quote",
+      "supportingFactIds": [],
+      "relatedActionIds": [],
+      "provenance": [
+        {
+          "sourceUrl": "https://revelusdermatology.com/cosmetic/botox/",
+          "sourceKind": "synthetic_demo",
+          "sourceExcerpt": "Pricing can change and is intentionally omitted from this synthetic dataset. Verify current pricing directly with the practice.",
+          "capturedAt": "2026-09-03T00:00:00.000Z",
+          "section": "Synthetic demonstration"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "actions": [],
+  "media": [],
+  "conflicts": [],
+  "answerSafety": {
+    "informationalOnly": true,
+    "mayDiagnose": false,
+    "mayPersonalizeTreatment": false,
+    "escalateWhen": [
+      "The request contains patient information or asks for personal medical advice."
+    ]
+  },
+  "review": {
+    "status": "synthetic_demo",
+    "reviewedAt": "2026-09-03T00:00:00.000Z",
+    "reviewNotes": [
+      "Manually authored for the ten-query public demonstration."
+    ]
+  }
+}
