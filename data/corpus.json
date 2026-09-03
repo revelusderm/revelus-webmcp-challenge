@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0-demo",
   "generatedAt": "2026-09-03T00:00:00.000Z",
-  "manifestSha256": "66d00de3218ce57f7dd1717918f25f47ca040d202eb7a3eefbde78b53b1e1b78",
+  "manifestSha256": "66169bbb7eee9cf63fb0d90bc04d9133a1dd33ab51787b8251d1c986c6db97f2",
   "records": [
     {
       "recordId": "condition:9001",
@@ -61,7 +61,7 @@
       "faqs": [
         {
           "faqId": "faq:demo:acne-demo:001",
-          "question": "Can adults be evaluated for acne?",
+          "question": "I'm in my 30s and still get breakouts. What are my options?",
           "answer": "Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.",
           "sourceKind": "synthetic_demo",
           "sourceUrl": "https://revelusdermatology.com/conditions/acne/"
@@ -69,8 +69,8 @@
       ],
       "relationships": [],
       "redirectTarget": null,
-      "responseSha256": "9057153b072f026ea505f501455b639e70f9b19013d8e93626645ec10c01199b",
-      "semanticSha256": "9057153b072f026ea505f501455b639e70f9b19013d8e93626645ec10c01199b",
+      "responseSha256": "b45cadba704edd9f308c2394f835b2a778ec4d93a7ea4a6b165397a1a4948ccf",
+      "semanticSha256": "b45cadba704edd9f308c2394f835b2a778ec4d93a7ea4a6b165397a1a4948ccf",
       "httpStatus": 200
     },
     {
@@ -96,7 +96,7 @@
       "faqs": [
         {
           "faqId": "faq:demo:hair-loss-demo:001",
-          "question": "Can I discuss thinning hair with a dermatology professional?",
+          "question": "My hair is thinning and I'd like to talk to someone about it.",
           "answer": "Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
           "sourceKind": "synthetic_demo",
           "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/"
@@ -104,8 +104,8 @@
       ],
       "relationships": [],
       "redirectTarget": null,
-      "responseSha256": "b769724d947db51ec8926d15536bb117f28462cc90d0d2dd87605f6df2e5744a",
-      "semanticSha256": "b769724d947db51ec8926d15536bb117f28462cc90d0d2dd87605f6df2e5744a",
+      "responseSha256": "4c377e9ac97a9fe4522d6703aaaacca8209faf89b7f6dc05802d023bf150a9b8",
+      "semanticSha256": "4c377e9ac97a9fe4522d6703aaaacca8209faf89b7f6dc05802d023bf150a9b8",
       "httpStatus": 200
     },
     {

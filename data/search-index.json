@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0-demo",
   "generatedAt": "2026-09-03T00:00:00.000Z",
-  "corpusSha256": "100f57b3da1f66ffe0bfd800260f3e6edcbca2d17f81a3ee1c21f6d0f85b1fb3",
+  "corpusSha256": "22cf7852e93673659ff288275856ee958403772808ba0587a5698cd8cb7e259b",
   "entries": [
     {
       "entryId": "page:condition:9001",
@@ -26,7 +26,7 @@
       "kind": "page",
       "pageId": "condition:9002",
       "title": "Acne information",
-      "text": "Acne information A synthetic demonstration record covering adult acne, breakouts, and the role of an acne evaluation. acne adult acne breakouts Can adults be evaluated for acne? Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.",
+      "text": "Acne information A synthetic demonstration record covering adult acne, breakouts, and the role of an acne evaluation. acne adult acne breakouts in my 30s still get breakouts breakout treatment options I'm in my 30s and still get breakouts. What are my options? Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.",
       "sourceUrl": "https://revelusdermatology.com/conditions/acne/",
       "modifiedGmt": "2026-09-03T00:00:00.000Z"
     },
@@ -34,8 +34,8 @@
       "entryId": "faq:demo:acne-demo:001",
       "kind": "faq",
       "pageId": "condition:9002",
-      "title": "Can adults be evaluated for acne?",
-      "text": "Acne information Can adults be evaluated for acne? Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options. acne adult acne breakouts",
+      "title": "I'm in my 30s and still get breakouts. What are my options?",
+      "text": "Acne information I'm in my 30s and still get breakouts. What are my options? Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options. acne adult acne breakouts in my 30s still get breakouts breakout treatment options",
       "sourceUrl": "https://revelusdermatology.com/conditions/acne/",
       "modifiedGmt": "2026-09-03T00:00:00.000Z"
     },
@@ -44,7 +44,7 @@
       "kind": "page",
       "pageId": "condition:9003",
       "title": "Hair loss information",
-      "text": "Hair loss information A synthetic demonstration record for questions about thinning hair and hair-loss evaluations. hair loss hair is thinning thinning hair Can I discuss thinning hair with a dermatology professional? Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
+      "text": "Hair loss information A synthetic demonstration record for questions about thinning hair and hair-loss evaluations. hair loss hair is thinning thinning hair talk to someone about thinning hair My hair is thinning and I'd like to talk to someone about it. Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
       "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/",
       "modifiedGmt": "2026-09-03T00:00:00.000Z"
     },
@@ -52,8 +52,8 @@
       "entryId": "faq:demo:hair-loss-demo:001",
       "kind": "faq",
       "pageId": "condition:9003",
-      "title": "Can I discuss thinning hair with a dermatology professional?",
-      "text": "Hair loss information Can I discuss thinning hair with a dermatology professional? Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description. hair loss hair is thinning thinning hair",
+      "title": "My hair is thinning and I'd like to talk to someone about it.",
+      "text": "Hair loss information My hair is thinning and I'd like to talk to someone about it. Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description. hair loss hair is thinning thinning hair talk to someone about thinning hair",
       "sourceUrl": "https://revelusdermatology.com/conditions/hair-loss/",
       "modifiedGmt": "2026-09-03T00:00:00.000Z"
     },

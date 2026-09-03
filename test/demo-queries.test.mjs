@@ -30,6 +30,7 @@ for (const item of fixture.questions) {
     }
     assert.equal(result.status, 'found');
     assert.equal(result.results[0]?.sourceUrl, item.expected.target);
+    assert.equal(result.results.length, 1, 'The narrow synthetic corpus should not add unrelated result cards');
     for (const card of result.results) {
       assert.equal(card.responseGuidance.patientConclusion, 'not_determined');
       assert.ok(card.responseGuidance.practiceStatement.length > 10);

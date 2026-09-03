@@ -10,7 +10,9 @@
   "aliases": [
     "acne",
     "adult acne",
-    "breakouts"
+    "breakouts",
+    "in my 30s still get breakouts",
+    "breakout treatment options"
   ],
   "source": {
     "url": "https://revelusdermatology.com/conditions/acne/",
@@ -35,7 +37,7 @@
   "faqs": [
     {
       "faqId": "faq:demo:acne-demo:001",
-      "question": "Can adults be evaluated for acne?",
+      "question": "I'm in my 30s and still get breakouts. What are my options?",
       "answer": "Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.",
       "answerMode": "canonical_quote",
       "supportingFactIds": [],

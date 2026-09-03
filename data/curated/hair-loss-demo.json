@@ -10,7 +10,8 @@
   "aliases": [
     "hair loss",
     "hair is thinning",
-    "thinning hair"
+    "thinning hair",
+    "talk to someone about thinning hair"
   ],
   "source": {
     "url": "https://revelusdermatology.com/conditions/hair-loss/",
@@ -35,7 +36,7 @@
   "faqs": [
     {
       "faqId": "faq:demo:hair-loss-demo:001",
-      "question": "Can I discuss thinning hair with a dermatology professional?",
+      "question": "My hair is thinning and I'd like to talk to someone about it.",
       "answer": "Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.",
       "answerMode": "canonical_quote",
       "supportingFactIds": [],

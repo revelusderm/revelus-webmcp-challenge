@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "locale": "en-US",
-  "sourceCorpusSha256": "100f57b3da1f66ffe0bfd800260f3e6edcbca2d17f81a3ee1c21f6d0f85b1fb3",
+  "sourceCorpusSha256": "22cf7852e93673659ff288275856ee958403772808ba0587a5698cd8cb7e259b",
   "concepts": [
     {
       "conceptId": "eczema_demo",
@@ -38,7 +38,9 @@
       "patientPhrases": [
         "acne",
         "adult acne",
-        "breakouts"
+        "breakouts",
+        "in my 30s still get breakouts",
+        "breakout treatment options"
       ],
       "commonMisspellings": [],
       "strongSignals": [
@@ -64,7 +66,8 @@
       "patientPhrases": [
         "hair loss",
         "hair is thinning",
-        "thinning hair"
+        "thinning hair",
+        "talk to someone about thinning hair"
       ],
       "commonMisspellings": [],
       "strongSignals": [

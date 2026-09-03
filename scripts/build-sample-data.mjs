@@ -25,10 +25,10 @@ const samples = [
     pageId: 'acne-demo', pageType: 'condition', kind: 'condition', wordpressId: 9002,
     title: 'Acne information', url: 'https://revelusdermatology.com/conditions/acne/',
     summary: 'A synthetic demonstration record covering adult acne, breakouts, and the role of an acne evaluation.',
-    phrases: ['acne', 'adult acne', 'breakouts'],
+    phrases: ['acne', 'adult acne', 'breakouts', 'in my 30s still get breakouts', 'breakout treatment options'],
     bookingRouteCandidate: 'medical_acne',
     faqs: [{
-      question: 'Can adults be evaluated for acne?',
+      question: "I'm in my 30s and still get breakouts. What are my options?",
       answer: 'Yes. Adults with persistent breakouts can schedule an acne evaluation to discuss appropriate options.'
     }]
   },
@@ -36,10 +36,10 @@ const samples = [
     pageId: 'hair-loss-demo', pageType: 'condition', kind: 'condition', wordpressId: 9003,
     title: 'Hair loss information', url: 'https://revelusdermatology.com/conditions/hair-loss/',
     summary: 'A synthetic demonstration record for questions about thinning hair and hair-loss evaluations.',
-    phrases: ['hair loss', 'hair is thinning', 'thinning hair'],
+    phrases: ['hair loss', 'hair is thinning', 'thinning hair', 'talk to someone about thinning hair'],
     bookingRouteCandidate: 'medical_hair_loss',
     faqs: [{
-      question: 'Can I discuss thinning hair with a dermatology professional?',
+      question: "My hair is thinning and I'd like to talk to someone about it.",
       answer: 'Yes. A hair-loss evaluation can review the pattern and history without assuming a diagnosis from a short description.'
     }]
   },
