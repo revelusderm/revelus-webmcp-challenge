@@ -389,30 +389,63 @@ private data inputs.
 ## Privacy, safety, and trust boundaries
 
 This project is designed for public information navigation—not clinical care or
-patient-account access.
+patient-account access. These are enforced product boundaries, not disclaimer
+copy that an agent may discard. When the application reaches the limit of
+published information, licensed decision-making, or online scheduling, it
+stops, asks a question, separates the work, or hands control to a person.
 
-### The application does
+The public repository keeps the same boundary categories as the live product.
+Its deliberately small synthetic corpus exercises only the ten documented demo
+queries; the production corpus and its broader conformance evidence remain
+private.
 
-- search and summarize the corpus committed to the active deployment;
-- link answers to canonical public source pages;
-- resolve schema-defined appointment paths;
-- display read-only availability when a valid route and upstream response are
-  available; and
-- direct the user to a secure, human-controlled handoff.
+### Information and clinical boundaries
 
-### The application does not
+| Boundary | What happens | Why it exists |
+| --- | --- | --- |
+| Published sources and citations | Results come only from the active reviewed corpus and retain a canonical source URL. The synthetic demo does not invent additional practice policies, prices, insurance participation, or medical claims. | Ask Revelus retrieves approved information; it does not create practice facts. |
+| Corpus eligibility | Only records intentionally included in the active corpus are searchable. Redirected, unindexed, obsolete, duplicate, or private material belongs outside the answer set. | A technically available page is not automatically an approved patient answer. |
+| Relevance floor | Results must clear the engine's relevance checks, and `no_match` is a valid outcome. The application does not add weak pages merely to fill a result list. | A short, honest answer is better than plausible-looking noise. |
+| Ambiguous language | Plain language and misspellings may identify candidate information, but a match does not establish what condition a person has or which treatment or visit they need. Ambiguous scheduling facts require clarification or a user choice. | Language matching is not licensed medical judgment. |
+| Diagnosis and personalized advice | A condition match does not say the person has that condition. A service match does not say it is appropriate, and a provider match is not a recommendation. Responses stay informational and leave diagnosis, personalized treatment, screening frequency, and provider selection to a qualified professional. | AI wording is nondeterministic; useful navigation must not become an unsupported clinical conclusion. |
+| Time-sensitive facts | Pricing, insurance, promotions, policies, logistics, and availability are identified as details that may require current verification. Synthetic examples are not statements of current production terms. | These facts can change after a corpus snapshot or differ by patient and payer. |
 
-- diagnose a condition or interpret a photo;
-- provide personalized treatment or screening advice;
-- access patient charts, test results, messages, or insurance identifiers;
-- accept names, contact details, dates of birth, photos, or medical histories;
-- hold, reserve, submit, or complete an appointment; or
-- expose the full runtime data bundle through a browser route.
+An agent may phrase the information naturally, but it must preserve the source,
+the clinical limit, and the fact that no patient-specific conclusion was made.
+It must not turn “Revelus publishes information about or offers this service”
+into “you have this condition” or “this treatment is right for you.”
 
-Additional controls include an 8 KB API request-body limit, JSON-only POST
-routes, strict outbound scheduling-link validation, `no-store` responses, a
-restrictive Content Security Policy, `nosniff`, no-referrer behavior, and
-same-origin opener isolation.
+### Privacy and system boundaries
+
+| Boundary | What happens | Why it exists |
+| --- | --- | --- |
+| Protected health information (PHI) and private input | Public search refuses patient names or unknown-person clinical requests, contact details, birth dates, Social Security or medical-record identifiers, insurance member IDs, personal or family medical histories, photos, and requests to diagnose or interpret an image. A refusal returns no search result, plan, or availability. | The public experience is not an intake form or clinical system. |
+| Records, results, and messages | The engine cannot access charts, test or pathology results, portal messages, or other private clinical content. It directs the person to an approved secure patient channel or the office. | Records belong in authenticated clinical systems. |
+| Closed booking inputs | Visit resolution accepts only schema-defined, non-identifying scheduling facts. Unknown fields, invalid values, oversized requests, and more than three structured concerns are rejected. Availability requires a valid path created by the current session. | A client cannot smuggle patient data or unreviewed instructions into deterministic routing. |
+| Safe response inspector | The inspector accepts bounded JSON, displays it as inert text, and rejects sensitive or secret-shaped keys, unknown-person clinical text, cycles, and uncontrolled output. | A debugging surface must not expose PHI, credentials, or executable markup. |
+| Server-side data | Runtime corpus files are served through bounded, individual API responses rather than downloadable browser routes. The public repository contains only data intentionally released as synthetic demonstration material. | This limits the browser's data and attack surface while preserving a reproducible public example. |
+| Transport and browser controls | API requests are JSON-only and limited to 8 KB. Responses use `no-store`; static files are allowlisted; and the deployment applies a restrictive Content Security Policy, `nosniff`, no-referrer behavior, and same-origin opener isolation. | Boundary enforcement should not depend solely on cooperative client behavior. |
+
+### Scheduling and workflow boundaries
+
+| Gate or boundary | What happens | Why it exists |
+| --- | --- | --- |
+| Search versus scheduling | Search is read-only. Visit resolution is a separate explicit step, and availability requires a resolved path. A resource match does not silently start scheduling. | Finding information is not consent to choose or begin an appointment workflow. |
+| Medicare | Medical routing asks for Medicare status when the route requires it. Medicare takes precedence and uses the dedicated practice-defined path; it is a scheduling gate, not a diagnosis or an insurance guarantee. | Skipping the question can produce the wrong appointment type. |
+| Screening and two appointments | A full-body skin cancer screening remains its own appointment. When another concern is also present, the resolver returns two paths instead of hiding or combining the concern. | Screening has its own visit scope and time allocation. |
+| Pediatric screening | A routine full-body screening request for a minor does not inherit the adult online route. The response provides the applicable policy and a staff-assisted next step; a specific spot concern may follow different guidance. | An adult workflow should not be generalized to a child. |
+| Multiple concerns | One medical concern may use a focused route. Two or three concerns use the practice's multi-concern workflow, and mixed medical and cosmetic topics remain separately represented. | Multiple concerns may require different time, staff, or scheduling decisions. |
+| Procedures require evaluation | Removal, biopsy, cryosurgery, electrodesiccation, excision, Mohs, and similar procedure requests ask whether the exact concern was already evaluated by the practice. New or uncertain concerns route to evaluation; already-evaluated procedures remain staff-controlled. No procedure slot or same-day procedure is promised. | Patient wording cannot establish a diagnosis, procedure, or readiness for surgery. |
+| Consultation and package prerequisites | Routes marked as requiring a recent consultation or existing package remain gated. A qualifying answer may proceed only where online scheduling is supported; otherwise the user is directed to consultation or staff. | An agent must not bypass a practice prerequisite by selecting a route directly. |
+| Office-controlled scheduling | Multi-concern visits, referrals, surgical procedures, and treatment categories designated by the practice remain call-to-schedule even when another prerequisite is met. | Some visits require staff verification or coordination. |
+| No submission or staff outreach | A referral or call instruction never claims that paperwork was submitted, a callback was requested, the office was contacted, or staff work began. | Displaying guidance does not perform an external action. |
+| Provider relationships and eligibility | Providers are attached through reviewed source relationships and joined to availability by stable identifiers or canonical profile URLs—not fuzzy name similarity. A listed provider without current online times remains visible with an explanation or call state. | This prevents invented provider associations and wrong-person scheduling joins. |
+| Live availability | When enabled, in-office times come only from the current public scheduling response. Practice, reason, provider, link, and origin are validated; empty, malformed, timed-out, or failed responses show no invented times and fall back safely. | Availability changes quickly, and a false slot is worse than an explicit unavailable state. |
+| Virtual visits | Virtual routes use the practice's separate telemedicine handoff rather than relabeling in-office availability as virtual. | In-office and telemedicine scheduling are different workflows. |
+| Existing appointments and unpublished hours | The application cannot cancel, reschedule, or inspect an existing appointment; promise the soonest opening; or invent walk-in, evening, or weekend availability. | Those actions and facts require authenticated or current systems the application does not control. |
+| Human-confirmed handoff; no booking | Availability is read-only. The application never holds, reserves, books, submits, or completes intake. The user must deliberately open the approved scheduler and confirm the provider, location, time, and reason there. | A search, click, or tool call must not create or imply an appointment. |
+| Approved handoff destinations | Scheduling links must use approved HTTPS origins and match the resolved practice and reason. Credentials, mismatched origins, paths, or reason identifiers are rejected. | This prevents open redirects and unreviewed scheduling destinations. |
+| Current state only | Resolving a new visit invalidates older path IDs, and a new question supersedes older asynchronous UI work. | A late response must not appear under the wrong question, card, or visit plan. |
 
 > [!CAUTION]
 > The demo is informational software. It does not replace a qualified medical
