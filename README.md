@@ -28,6 +28,7 @@ owned by Revelus Dermatology.
 ## Contents
 
 - [What the project demonstrates](#what-the-project-demonstrates)
+- [Built during the challenge](#built-during-the-challenge)
 - [Try the live experience](#try-the-live-experience)
 - [Quick start](#quick-start)
 - [The ten supported queries](#the-ten-supported-queries)
@@ -71,6 +72,55 @@ The implementation demonstrates:
 No external model API or API key is required to run this repository. A
 WebMCP-enabled client decides when to invoke the registered tools; the included
 page also provides controls for exercising the same handlers directly.
+
+## Built during the challenge
+
+This submission is a meaningful WebMCP extension of a pre-existing business
+website. It does **not** claim that Revelus Dermatology, its primary website, or
+its underlying content and scheduling systems were created for the challenge.
+
+The [official rules](https://webmcp.devpost.com/rules) allow a pre-existing
+project when it was meaningfully extended with WebMCP after the submission
+period began, provided the prior work and challenge work are clearly
+distinguished. The relevant scope for this submission is:
+
+| Predates the challenge | Built during the challenge submission period |
+| --- | --- |
+| Revelus Dermatology as an existing practice and brand | The standalone [Revelus.ai](https://revelus.ai/) agent-facing experience |
+| The existing [revelusdermatology.com](https://revelusdermatology.com/) website and its conventional navigation | The page-local WebMCP integration and four registered tools |
+| Previously published practice content, provider information, brand assets, and photography | The structured content-matching, canonical-answer, and page-card projection layers |
+| Existing business rules and appointment offerings | The typed, non-diagnostic visit-path resolver and its assistant-facing contracts |
+| The practice's existing NextPatient scheduling system and live appointment inventory | The read-only availability adapter, outbound-link validation, and human-controlled scheduling handoff |
+| Existing secure patient communication and record systems | The privacy gate, de-identified tool inputs, patient-record refusal, safety messaging, and response inspector |
+
+Revelus.ai and the WebMCP work in the right-hand column were developed during
+the official August 25–September 3, 2026 submission period. Only that new work
+is presented for challenge judging; the pre-existing items provide context and
+authorized integration inputs.
+
+Challenge-period work also included the shared UI/tool action layer, the public
+synthetic-corpus generator and schemas, the ten-query executable fixture,
+automated conformance tests, the allowlisted browser build, and the deployment
+configuration in this repository. In other words, the pre-existing website
+supplied authorized subject matter and real-world systems; the new work made
+that information and workflow usable through a working WebMCP product.
+
+### Dated implementation evidence
+
+- The public repository's
+  [initial release commit](https://github.com/revelusderm/revelus-webmcp-challenge/commit/2ad65262923b3b5f2a9b768fbbf30472aa5897bb)
+  is dated September 3, 2026 and contains the complete runnable WebMCP
+  implementation, synthetic corpus, tests, and deployment configuration.
+- The current [commit history](https://github.com/revelusderm/revelus-webmcp-challenge/commits/main/)
+  provides the public, timestamped record for the competition release.
+- The WebMCP implementation is directly inspectable in
+  [`src/challenge-tools.mjs`](src/challenge-tools.mjs), and its registration and
+  ten-query behavior are executable through `npm run verify`.
+
+The competition repository was intentionally published as a clean snapshot so
+the proprietary production corpus and its history would not be exposed. That
+privacy boundary does not remove any source code, assets, sample data, or
+instructions required to run and evaluate the public submission.
 
 ## Try the live experience
 
