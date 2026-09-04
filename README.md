@@ -536,6 +536,9 @@ that every request passes through every branch.
 - Synthetic answers demonstrate behavior; they are not a complete statement of
   the practice's current services, prices, insurance participation, or medical
   guidance.
+- The testimonial cards are conspicuously labeled fictional examples created
+  solely to demonstrate the interface. They are not real patient reviews or
+  accounts of real patient experiences.
 - Live availability depends on the external scheduling provider and may be
   unavailable or require a direct call.
 - The compatibility shim demonstrates the shared tool behavior but is not a
@@ -557,12 +560,27 @@ rights, safety boundary, and intended behavior can be reviewed together.
 
 ## License
 
-The source code and synthetic demonstration dataset in this repository are
-released under the [MIT License](LICENSE).
+The [MIT License](LICENSE) applies to the source code, documentation, and
+synthetic demonstration dataset in this repository, except where a file or the
+asset-specific terms below say otherwise.
 
-Revelus names, logos, photography, and other marks remain the property of
-Revelus Dermatology. The license does not grant rights to any private production
-corpus or to material not contained in this repository.
+The Sinkin Sans font files under `assets/fonts/` are Copyright 2014 Keith Bates
+and K-Type and are distributed under the Apache License, Version 2.0. The full
+license and embedded attribution are preserved in
+[`assets/fonts/LICENSE.txt`](assets/fonts/LICENSE.txt).
+
+The files `assets/ask-revelus-social-1200x630.png`,
+`assets/revelus-icon-white.png`, `assets/revelus-providers.png`, and
+`assets/site-header-logo-white.png` contain Revelus-owned or Revelus-licensed
+branding and photography. They are excluded from the MIT grant and are included
+only to operate, evaluate, and demonstrate this project. No separate license is
+granted to extract or reuse those assets.
+
+Revelus names, logos, and other brand identifiers are trademarks or service
+marks of their respective owner. Neither the MIT License nor any other license
+in this repository grants trademark rights. The licenses also grant no rights
+to the private production corpus or to material not contained in this
+repository.
 
 ---
 

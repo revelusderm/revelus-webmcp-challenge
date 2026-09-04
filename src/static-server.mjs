@@ -12,15 +12,15 @@ export const BROWSER_MODULES = [
 ];
 export const BROWSER_ASSETS = [
   'revelus-providers.png', 'ask-revelus-social-1200x630.png', 'site-header-logo-white.png', 'revelus-icon-white.png',
-  'revelus-favicon-150.jpg', 'revelus-favicon-300.jpg',
+  'medical-favicon.svg',
   'fonts/SinkinSans-300Light.woff2', 'fonts/SinkinSans-300LightItalic.woff2',
-  'fonts/SinkinSans-400Regular.woff2', 'fonts/SinkinSans-600SemiBold.woff2'
+  'fonts/SinkinSans-400Regular.woff2', 'fonts/SinkinSans-600SemiBold.woff2', 'fonts/LICENSE.txt'
 ];
 const TYPES = new Map([
   ['.html','text/html; charset=utf-8'],['.css','text/css; charset=utf-8'],
   ['.mjs','text/javascript; charset=utf-8'],['.json','application/json; charset=utf-8'],['.png','image/png'],
-  ['.jpg','image/jpeg'],['.webmanifest','application/manifest+json; charset=utf-8'],
-  ['.woff2','font/woff2']
+  ['.jpg','image/jpeg'],['.svg','image/svg+xml'],['.txt','text/plain; charset=utf-8'],
+  ['.webmanifest','application/manifest+json; charset=utf-8'],['.woff2','font/woff2']
 ]);
 const MAX_API_BODY_BYTES = 8 * 1024;
 

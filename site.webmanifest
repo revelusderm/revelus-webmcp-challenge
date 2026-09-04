@@ -9,14 +9,9 @@
   "theme_color": "#3b3b3b",
   "icons": [
     {
-      "src": "/assets/revelus-favicon-150.jpg",
-      "sizes": "150x150",
-      "type": "image/jpeg"
-    },
-    {
-      "src": "/assets/revelus-favicon-300.jpg",
-      "sizes": "300x300",
-      "type": "image/jpeg"
+      "src": "/assets/medical-favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ]
 }
